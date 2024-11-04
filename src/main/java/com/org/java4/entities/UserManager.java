@@ -12,16 +12,17 @@ public class UserManager {
     EntityManagerFactory factory = Persistence.createEntityManagerFactory("PolyOE");
     EntityManager em = factory.createEntityManager();
 
-    public void findAll() {
+    public List<User> findAll() {
         String jpql = "SELECT o FROM User o";
         TypedQuery<User> query = em.createQuery(jpql, User.class);
         List<User> list = query.getResultList();
 
-        list.forEach(user -> {
-            String fullname = user.getFullname();
-            boolean admin = user.getAdmin();
-            System.out.println(fullname + ": " + admin);
-        });
+//        list.forEach(user -> {
+//            String fullname = user.getFullname();
+//            boolean admin = user.getAdmin();
+//            System.out.println(fullname + ": " + admin);
+//        });
+        return list;
     }
 
     public void findById(String id) {
@@ -93,6 +94,10 @@ public class UserManager {
         List<User> list = query.getResultList();
 
         return list;
+    }
+
+    public int countAllUsers() {
+        return this.findAll().size();
     }
 }
 
