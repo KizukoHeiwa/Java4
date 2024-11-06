@@ -57,12 +57,17 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> findByFullnameAndRole(String fullname, boolean role) {
-        String jpql = "SELECT o FROM User o WHERE o.fullname LIKE :fullname and o.admin = :role";
-        TypedQuery<User> query = em.createQuery(jpql, User.class);
-        query.setParameter("fullname", "%" + fullname + "%");
-        query.setParameter("role", role);
-        return query.getResultList();
+    public List<User> findByFullnameAndRole(String search, boolean searchRole) {
+        if (!search.isEmpty()) {
+            String jpql = "SELECT o FROM User o WHERE o.fullname LIKE :search and o.admin = :searchRole";
+            TypedQuery<User> query = em.createQuery(jpql, User.class);
+            query.setParameter("search", "%" + search + "%");
+            query.setParameter("searchRole", searchRole);
+            return query.getResultList();
+        }
+        else {
+            return findAll();
+        }
     }
 
 }

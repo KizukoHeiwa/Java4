@@ -18,7 +18,8 @@ import java.util.List;
         "/user/crud/create",
         "/user/crud/update",
         "/user/crud/delete",
-        "/user/crud/reset"})
+        "/user/crud/reset",
+        "/user/crud/search"})
 public class lab2 extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,11 +40,11 @@ public class lab2 extends HttpServlet {
             message = "Create: " + form.getId();
             if (userDAO.findById(form.getId()) == null) {
                 userDAO.create(form);
+                form = new User();
             }
             else {
                 message = "Duplicate user id";
             }
-            form = new User();
         } else if (path.contains("update")) {
             message = "Update: " + form.getId();
             userDAO.update(form);
@@ -55,6 +56,15 @@ public class lab2 extends HttpServlet {
         }
         else if (path.contains("reset")) {
             form = new User();
+        } else if (path.contains("search")) {
+            form = new User();
+            String search = req.getParameter("search");
+            boolean searchRole = Boolean.parseBoolean(req.getParameter("searchRole"));
+            List<User> users = userDAO.findByFullnameAndRole(search, searchRole);
+            req.setAttribute("users", users);
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("/lab2.jsp").forward(req, resp);
+            return;
         }
         List<User> list = userDAO.findAll();
         req.setAttribute("message", message);

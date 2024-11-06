@@ -16,5 +16,5 @@ public interface UserDAO {
     /**Xóa theo mã*/
     void deleteById(String id);
     /**Tìm user theo tên và role*/
-    List<User> findByFullnameAndRole(String fullname, boolean role);
+    List<User> findByFullnameAndRole(String search, boolean searchRole);
 }

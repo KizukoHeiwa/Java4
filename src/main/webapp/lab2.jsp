@@ -15,8 +15,8 @@
 </head>
 <c:set var="url" value="/user/crud"/>
 <body>
-    <form method="post" class="was-validated">
-        <div class="container-fluid" style="width: 40%">
+    <div class="container-fluid" style="width: 40%">
+        <form method="post" class="was-validated">
             <div class="row">
                 <div class="col-6">
                     <label class="form-label">Id:</label>
@@ -49,8 +49,27 @@
             <button type="submit" formaction="${url}/update" class="btn btn-success">Update</button>
             <button type="submit" formaction="${url}/delete" class="btn btn-danger">Delete</button>
             <button type="submit" formaction="${url}/reset" class="btn btn-warning" formnovalidate>Reset</button>
-        </div>
-    </form>
+        </form>
+        <form method="post">
+            <div class="row">
+                <div class="col-6 d-inline-flex align-items-center">
+                    <label class="form-label">Search:</label>
+                    <input type="text" name="search" class="form-control" value="${param.search}">
+                </div>
+                <div class="col-4 d-inline-flex align-items-center">
+                    <label class="form-label">Role:</label>
+                    <input type="radio" name="searchRole" class="form-check-input" value="true" ${param.searchRole?'checked':''}>
+                    <label class="form-check-label">Admin</label>
+                    <input type="radio" name="searchRole" class="form-check-input" value="false" ${!param.searchRole?'checked':''}>
+                    <label class="form-check-label">User</label>
+                </div>
+                <div class="col-2 d-inline-flex align-items-center">
+                    <button type="submit" formaction="${url}/search" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <div class="container-fluid" style="width: 50%">
         <table class="table table-hover">
             <thead>
