@@ -15,4 +15,6 @@ public interface UserDAO {
     void update(User item);
     /**Xóa theo mã*/
     void deleteById(String id);
+    /**Tìm user theo tên và role*/
+    List<User> findByFullnameAndRole(String fullname, boolean role);
 }
