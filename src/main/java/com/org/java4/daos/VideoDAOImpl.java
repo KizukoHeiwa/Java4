@@ -67,6 +67,15 @@ public class VideoDAOImpl implements VideoDAO {
     }
 
     @Override
+    public List<String> findByFavorite() {
+        String jpql = "select o.videoid.title from Favorite o";
+        TypedQuery<String> q = em.createQuery(jpql,String.class);
+        List<String> list = q.getResultList();
+        list.forEach(System.out::println);
+        return list;
+    }
+
+    @Override
     public List<Video> findByShared() {
         return List.of();
     }

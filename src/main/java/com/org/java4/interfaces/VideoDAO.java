@@ -19,6 +19,8 @@ public interface VideoDAO {
     List<Video> findByViewsDescending();
     /**Truy vấn các Video mà tiêu đề chứa ...*/
     List<Video> findByTitleContaining(String keyword);
+    /**Truy vấn các Video được yêu thích*/
+    List<String> findByFavorite();
     /**Truy vấn các Video được share*/
     List<Video> findByShared();
     /**Truy vấn các Video được User ? yêu thích*/
