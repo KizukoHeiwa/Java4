@@ -1,31 +1,31 @@
 package com.org.java4.daos;
 
-import com.org.java4.entities.Video;
-import com.org.java4.interfaces.VideoDAO;
+import com.org.java4.entities.Share;
+import com.org.java4.interfaces.ShareDAO;
 import com.org.java4.utils.XJPA;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
-public class VideoDAOImpl implements VideoDAO {
+public class ShareDAOImpl implements ShareDAO {
     EntityManager em = XJPA.getEntityManager();
     @Override
     protected void finalize() throws Throwable {
         em.close();
     }
     @Override
-    public List<Video> findAll() {
-        String jpql = "SELECT o FROM Video o";
-        TypedQuery<Video> query = em.createQuery(jpql, Video.class);
+    public List<Share> findAll() {
+        String jpql = "SELECT o FROM Share o";
+        TypedQuery<Share> query = em.createQuery(jpql, Share.class);
         return query.getResultList();
     }
     @Override
-    public Video findById(String id) {
-        return em.find(Video.class, id);
+    public Share findById(String id) {
+        return em.find(Share.class, id);
     }
     @Override
-    public void create(Video entity) {
+    public void create(Share entity) {
         try {
             em.getTransaction().begin();
             em.persist(entity);
@@ -35,7 +35,7 @@ public class VideoDAOImpl implements VideoDAO {
         }
     }
     @Override
-    public void update(Video entity) {
+    public void update(Share entity) {
         try {
             em.getTransaction().begin();
             em.merge(entity);
@@ -46,7 +46,7 @@ public class VideoDAOImpl implements VideoDAO {
     }
     @Override
     public void deleteById(String id) {
-        Video entity = em.find(Video.class, id);
+        Share entity = em.find(Share.class, id);
         try {
             em.getTransaction().begin();
             em.remove(entity);
@@ -54,35 +54,5 @@ public class VideoDAOImpl implements VideoDAO {
         } catch (Exception e) {
             em.getTransaction().rollback();
         }
-    }
-
-    @Override
-    public List<Video> findByViewsDescending() {
-        return List.of();
-    }
-
-    @Override
-    public List<Video> findByTitleContaining(String keyword) {
-        return List.of();
-    }
-
-    @Override
-    public List<Video> findByShared() {
-        return List.of();
-    }
-
-    @Override
-    public List<Video> findByLikedByUser(String userId) {
-        return List.of();
-    }
-
-    @Override
-    public List<Video> findBySharedByUserId(String userId) {
-        return List.of();
-    }
-
-    @Override
-    public List<Integer> findLikesByVideoId(String videoId) {
-        return List.of();
     }
 }
