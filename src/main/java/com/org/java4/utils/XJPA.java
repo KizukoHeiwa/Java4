@@ -7,7 +7,7 @@ import jakarta.persistence.Persistence;
 public class XJPA {
     private static EntityManagerFactory factory;
     static {
-        factory = Persistence.createEntityManagerFactory("PolyOE");
+        factory = Persistence.createEntityManagerFactory("ASM_JAVA4");
     }
     public static EntityManager getEntityManager(){
         return factory.createEntityManager();

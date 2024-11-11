@@ -2,7 +2,9 @@ package com.org.java4.interfaces;
 
 import com.org.java4.entities.Video;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public interface VideoDAO {
     /**Truy vấn tất cả*/
@@ -24,9 +26,11 @@ public interface VideoDAO {
     /**Truy vấn các Video được share*/
     List<Video> findByShared();
     /**Truy vấn các Video được User ? yêu thích*/
-    List<Video> findByLikedByUser(String userId);
+    List<Video> findByFavoriteByUser(String userId);
     /**Truy vấn các Video được share bởi User ?*/
     List<Video> findBySharedByUserId(String userId);
-    /**Truy vấn các lượt like của từng Video */
-    List<Integer> findLikesByVideoId(String videoId);
+    /**Truy vấn các User thích Video ?*/
+    List<String> findUserFavoriteVideoID(String videoId);
+    /** Thống kê lượng like của từng Video */
+    HashMap<String, Long> findFavoriteByVideoId();
 }
