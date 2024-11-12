@@ -7,6 +7,7 @@ public class TestDAO {
     public static void main(String[] args) {
         VideoDAO videoDAO = new VideoDAOImpl();
 //        videoDAO.findByShared().forEach(System.out::println);
-        videoDAO.findFavoriteByVideoId().forEach((k, v) -> System.out.println(k + " " + v));
+//        videoDAO.findFavoriteByVideoId().forEach((k, v) -> System.out.println(k + " " + v));
+        videoDAO.findByFavoriteByUser("20241103070122").forEach(System.out::println);
     }
 }

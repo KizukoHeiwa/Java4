@@ -89,9 +89,9 @@ public class VideoDAOImpl implements VideoDAO {
 
     @Override
     public List<Video> findByFavoriteByUser(String userId) {
-        String jpql = "SELECT v FROM Video v JOIN v.favorites l WHERE l.userid = :userId";
+        String jpql = "SELECT v FROM Video v JOIN v.favorites f WHERE f.userid = :userId";
         TypedQuery<Video> query = em.createQuery(jpql, Video.class);
-        query.setParameter("userId", userId);
+        query.setParameter("userId", new UsersDAOImpl().findById(userId));
         return query.getResultList();
     }
 
