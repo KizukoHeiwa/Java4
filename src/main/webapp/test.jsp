@@ -16,27 +16,31 @@
     <title>FPT Polytechnic</title>
 </head>
 <body>
-    <div class="container">
-        <h1>${user.fullname}</h1>
-        <c:forEach var="video" items="${list}"><h3>${video.title}</h3></c:forEach>
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <td>Title</td>
-                    <td>Người thích</td>
-                    <td>Ngày thích</td>
-                </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="fav" items="${listFav}">
-                <tr>
-                    <td>${fav.getVideoid().getTitle()}</td>
-                    <td>${fav.userid.fullname}</td>
-                    <td>${fav.likedate}</td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+    <div class="container text-center">
+        <div class="bai3">
+            <h1>${userFavs[0].userid.fullname}</h1>
+            <c:forEach var="userFav" items="${userFavs}"><h3>${userFav.videoid.title}</h3></c:forEach>
+        </div>
+        <div class="bai4">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <td>Video title</td>
+                        <td>Người thích</td>
+                        <td>Ngày thích</td>
+                    </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="fav" items="${listFav}">
+                    <tr>
+                        <td>${fav.videoid.title}</td>
+                        <td>${fav.userid.fullname}</td>
+                        <td>${fav.likedate}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

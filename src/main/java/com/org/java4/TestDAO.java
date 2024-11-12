@@ -14,7 +14,7 @@ public class TestDAO {
 //        videoDAO.findFavoriteByVideoId().forEach((k, v) -> System.out.println(k + " " + v));
 //        videoDAO.findByFavoriteByUser("20241103070122").forEach(System.out::println);
 
-        for (Favorite f : favoriteDAO.findByUserId("20241103070122")) {
+        for (Favorite f : favoriteDAO.findAll()) {
             System.out.println(f.getVideoid().getTitle());
             System.out.println(f.getUserid().getFullname());
             System.out.println(f.getLikedate());
