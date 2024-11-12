@@ -19,7 +19,7 @@
     <div class="container">
         <h1>${user.fullname}</h1>
         <c:forEach var="video" items="${list}"><h3>${video.title}</h3></c:forEach>
-        <table class="table table-striped">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <td>Title</td>
@@ -28,11 +28,11 @@
                 </tr>
             </thead>
             <tbody>
-            <c:forEach var="video" items="${list}">
+            <c:forEach var="fav" items="${listFav}">
                 <tr>
-                    <td>${video.title}</td>
-                    <td>${video.userFavorite}</td>
-                    <td>${video.dateFavorite}</td>
+                    <td>${fav.getVideoid().getTitle()}</td>
+                    <td>${fav.userid.fullname}</td>
+                    <td>${fav.likedate}</td>
                 </tr>
             </c:forEach>
             </tbody>

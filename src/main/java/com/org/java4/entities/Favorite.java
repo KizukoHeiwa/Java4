@@ -15,13 +15,13 @@ public class Favorite {
     @Column(name = "ID", nullable = false, length = 14)
     private String id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "USERID", nullable = false)
     private Users userid;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "VIDEOID", nullable = false)
-    private com.org.java4.entities.Video videoid;
+    private Video videoid;
 
     @Column(name = "LIKEDATE")
     private LocalDate likedate;

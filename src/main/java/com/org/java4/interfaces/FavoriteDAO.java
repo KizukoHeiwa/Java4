@@ -15,4 +15,6 @@ public interface FavoriteDAO {
     void update(Favorite item);
     /**Xóa theo mã*/
     void deleteById(String id);
+    /**Tìm các lượt thích theo User ID ?*/
+    List<Favorite> findByUserId(String userId);
 }
