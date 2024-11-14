@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: Admin
   Date: 15/11/2024
-  Time: 12:32 AM
+  Time: 12:33 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -55,7 +55,7 @@
 
 <!-- Main Content -->
 <div class="container my-4">
-    <h2 class="text-center">Video theo phổ biến</h2>
+    <h2 class="text-center">Video đã thích</h2>
     <!-- Videos -->
     <div class="row">
         <div class="col-md-4 mb-4">
@@ -64,8 +64,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Video 1</h5>
                     <div class="btn-wrapper float-end">
-                        <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                        <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
+                        <!-- <i class="fa-regular fa-thumbs-up"></i> -->
+                        <button class="btn btn-primary"><i class="fa-solid fa-thumbs-up"></i> Liked</button>
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
                                 class="fas fa-share"></i> Share</button>
                     </div>
@@ -79,8 +79,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Video 1</h5>
                     <div class="btn-wrapper float-end">
-                        <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                        <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
+                        <!-- <i class="fa-regular fa-thumbs-up"></i> -->
+                        <button class="btn btn-primary"><i class="fa-solid fa-thumbs-up"></i> Liked</button>
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
                                 class="fas fa-share"></i> Share</button>
                     </div>
@@ -94,8 +94,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Video 1</h5>
                     <div class="btn-wrapper float-end">
-                        <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                        <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
+                        <!-- <i class="fa-regular fa-thumbs-up"></i> -->
+                        <button class="btn btn-primary"><i class="fa-solid fa-thumbs-up"></i> Liked</button>
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
                                 class="fas fa-share"></i> Share</button>
                     </div>
@@ -109,38 +109,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Video 1</h5>
                     <div class="btn-wrapper float-end">
-                        <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                        <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                class="fas fa-share"></i> Share</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                <div class="card-body">
-                    <h5 class="card-title">Video 1</h5>
-                    <div class="btn-wrapper float-end">
-                        <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                        <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                class="fas fa-share"></i> Share</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                <div class="card-body">
-                    <h5 class="card-title">Video 1</h5>
-                    <div class="btn-wrapper float-end">
-                        <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                        <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
+                        <!-- <i class="fa-regular fa-thumbs-up"></i> -->
+                        <button class="btn btn-primary"><i class="fa-solid fa-thumbs-up"></i> Liked</button>
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
                                 class="fas fa-share"></i> Share</button>
                     </div>

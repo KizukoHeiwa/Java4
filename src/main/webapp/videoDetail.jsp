@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: Admin
   Date: 15/11/2024
-  Time: 12:32 AM
+  Time: 12:33 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -55,14 +55,17 @@
 
 <!-- Main Content -->
 <div class="container my-4">
-    <h2 class="text-center">Video theo phổ biến</h2>
-    <!-- Videos -->
     <div class="row">
-        <div class="col-md-4 mb-4">
+        <div class="col-md-9 mb-4">
             <div class="card">
                 <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
                 <div class="card-body">
-                    <h5 class="card-title">Video 1</h5>
+                    <h4 class="card-title">Video 1</h4>
+                    <div class="description">
+                        <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, laboriosam obcaecati, quod ipsam
+                            doloribus voluptas dignissimos maiores labore eum, quia porro repudiandae. Accusamus, aut dolor
+                            assumenda incidunt mollitia dicta nam.</h6>
+                    </div>
                     <div class="btn-wrapper float-end">
                         <!-- <i class="fa-solid fa-thumbs-up"></i> -->
                         <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
@@ -73,88 +76,28 @@
             </div>
         </div>
 
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                <div class="card-body">
-                    <h5 class="card-title">Video 1</h5>
-                    <div class="btn-wrapper float-end">
-                        <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                        <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                class="fas fa-share"></i> Share</button>
-                    </div>
-                </div>
+        <div class="col-md-3 mb-4">
+            <div class="d-flex align-items-center gap-2 p-2 mb-3 border rounded-2">
+                <img src="https://placehold.co/600x400" class="float-start" alt="thumbnail" width="100px">
+                <h6>Video 1</h6>
             </div>
-        </div>
 
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                <div class="card-body">
-                    <h5 class="card-title">Video 1</h5>
-                    <div class="btn-wrapper float-end">
-                        <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                        <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                class="fas fa-share"></i> Share</button>
-                    </div>
-                </div>
+            <div class="d-flex align-items-center gap-2 p-2 mb-3 border rounded-2">
+                <img src="https://placehold.co/600x400" class="float-start" alt="thumbnail" width="100px">
+                <h6>Video 1</h6>
             </div>
-        </div>
 
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                <div class="card-body">
-                    <h5 class="card-title">Video 1</h5>
-                    <div class="btn-wrapper float-end">
-                        <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                        <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                class="fas fa-share"></i> Share</button>
-                    </div>
-                </div>
+            <div class="d-flex align-items-center gap-2 p-2 mb-3 border rounded-2">
+                <img src="https://placehold.co/600x400" class="float-start" alt="thumbnail" width="100px">
+                <h6>Video 1</h6>
             </div>
-        </div>
 
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                <div class="card-body">
-                    <h5 class="card-title">Video 1</h5>
-                    <div class="btn-wrapper float-end">
-                        <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                        <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                class="fas fa-share"></i> Share</button>
-                    </div>
-                </div>
+            <div class="d-flex align-items-center gap-2 p-2 mb-3 border rounded-2">
+                <img src="https://placehold.co/600x400" class="float-start" alt="thumbnail" width="100px">
+                <h6>Video 1</h6>
             </div>
+
         </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                <div class="card-body">
-                    <h5 class="card-title">Video 1</h5>
-                    <div class="btn-wrapper float-end">
-                        <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                        <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                class="fas fa-share"></i> Share</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="btn-wrapper text-center">
-        <button class="btn btn-secondary"><i class="fas fa-fast-backward"></i></button>
-        <button class="btn btn-secondary"><i class="fa-solid fa-left-long"></i></button>
-        <button class="btn btn-secondary"><i class="fa-solid fa-right-long"></i></button>
-        <button class="btn btn-secondary"><i class="fas fa-fast-forward"></i></button>
     </div>
 </div>
 
