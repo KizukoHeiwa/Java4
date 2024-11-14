@@ -16,7 +16,12 @@
     <title>FPT Polytechnic</title>
 </head>
 <body>
+    <c:url value="/test" var="url"/>
     <div class="container text-center">
+        <form method="get" class="w-25 mx-auto d-flex">
+            <input type="text" name="search" class="form-control" placeholder="Search...">
+            <button class="btn btn-success" formaction="${url}">Search</button>
+        </form>
         <div class="bai3">
             <h1>${userFavs[0].userid.fullname}</h1>
             <c:forEach var="userFav" items="${userFavs}"><h3>${userFav.videoid.title}</h3></c:forEach>

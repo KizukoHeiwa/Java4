@@ -16,7 +16,12 @@ import java.io.IOException;
 public class test extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("userFavs", new FavoriteDAOImpl().findByUserId("20241103070122"));
+        if (req.getQueryString() != null) {
+            req.setAttribute("userFavs", new FavoriteDAOImpl().findByUserId(req.getParameter("search")));
+        }
+        else {
+            req.setAttribute("userFavs", new FavoriteDAOImpl().findByUserId("20241103070122"));
+        }
         req.setAttribute("listFav", new FavoriteDAOImpl().findAll());
         req.getRequestDispatcher("/test.jsp").forward(req, resp);
     }
