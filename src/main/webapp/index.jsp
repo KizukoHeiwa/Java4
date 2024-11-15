@@ -31,12 +31,12 @@
                         <i class="fa-solid fa-user"></i> Tài khoản
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Đăng nhập</a></li>
+                        <li><a class="dropdown-item" href="#" role="button" data-bs-toggle="modal" data-bs-target="#login">Đăng nhập</a></li>
                         <li><a class="dropdown-item" href="#">Thông tin tài khoản</a></li>
                         <li><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>
                         <li><a class="dropdown-item" href="#">Quên mật khẩu</a></li>
                         <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
-                        <li><a class="dropdown-item" href="#">Đăng ký</a></li>
+                        <li><a class="dropdown-item" href="#" role="button" data-bs-toggle="modal" data-bs-target="#signUp">Đăng ký</a></li>
                     </ul>
                 </li>
             </ul>
@@ -178,6 +178,91 @@
 
                     <!-- Submit button -->
                     <button data-mdb-ripple-init type="button" class="btn btn-success btn-block mb-4">Send</button>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Login modal -->
+<div class="modal" id="login">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Đăng nhập</h4>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form class="was-validated">
+                    <!-- Email input -->
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label" for="username">Username:</label>
+                        <input type="text" id="username" class="form-control" required />
+
+                        <label class="form-label" for="password">Password:</label>
+                        <input type="text" id="password" class="form-control" required />
+
+                        <input type="checkbox" class="form-check-input" name="remember" id="remember">
+                        <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button data-mdb-ripple-init type="button" class="btn btn-success btn-block mb-4">Login</button>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Sign Up modal -->
+<div class="modal" id="signUp">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Đăng ký</h4>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form class="was-validated">
+                    <!-- Email input -->
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="form-label" for="username">Username:</label>
+                                <input type="text" class="form-control"name="username" required />
+
+                                <label class="form-label">Fullname:</label>
+                                <input type="text" class="form-control" name="fullname" required />
+                            </div>
+
+                            <div class="col-6">
+                                <label class="form-label">Password:</label>
+                                <input type="text" class="form-control" required />
+
+                                <label class="form-label">Username:</label>
+                                <input type="text" class="form-control" name="email" required />
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Submit button -->
+                    <button data-mdb-ripple-init type="button" class="btn btn-success btn-block mb-4">Sign Up</button>
                 </form>
             </div>
             <!-- Modal footer -->
