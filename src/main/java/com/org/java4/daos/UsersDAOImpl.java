@@ -21,8 +21,11 @@ public class UsersDAOImpl implements UsersDAO {
         return query.getResultList();
     }
     @Override
-    public Users findById(String id) {
-        return em.find(Users.class, id);
+    public Users findByIdOrEmail(String search) {
+        String jpql = "SELECT o FROM Users o WHERE o.id = :search OR o.email = :search";
+        TypedQuery<Users> query = em.createQuery(jpql, Users.class);
+        query.setParameter("search", search);
+        return query.getSingleResult();
     }
     @Override
     public void create(Users entity) {

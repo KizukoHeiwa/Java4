@@ -11,6 +11,8 @@ public interface VideoDAO {
     List<Video> findAll();
     /**Truy vấn theo mã*/
     Video findById(String id);
+    /**Tìm video theo keyword Title*/
+    List<Video> findByTitle(String keyword);
     /**Thêm mới*/
     void create(Video item);
     /**Cập nhật*/
@@ -22,7 +24,7 @@ public interface VideoDAO {
     /**Truy vấn các Video mà tiêu đề chứa ...*/
     List<Video> findByTitleContaining(String keyword);
     /**Truy vấn các Video được yêu thích*/
-    List<String> findByFavorite();
+    List<Video> findByFavorite();
     /**Truy vấn các Video được share*/
     List<Video> findByShared();
     /**Truy vấn các Video được User ? yêu thích*/
@@ -33,4 +35,6 @@ public interface VideoDAO {
     List<String> findUserFavoriteVideoID(String videoId);
     /** Thống kê lượng like của từng Video */
     HashMap<String, Long> findFavoriteByVideoId();
+    /** Truy vấn video không được ai thích*/
+    List<Video> findVideoNoLike();
 }

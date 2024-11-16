@@ -26,6 +26,15 @@ public class VideoDAOImpl implements VideoDAO {
     public Video findById(String id) {
         return em.find(Video.class, id);
     }
+
+    @Override
+    public List<Video> findByTitle(String keyword) {
+        String jpql = "SELECT v FROM Video v WHERE v.title LIKE :keyword";
+        TypedQuery<Video> query = em.createQuery(jpql, Video.class);
+        query.setParameter("keyword", "%" + keyword + "%");
+        return query.getResultList();
+    }
+
     @Override
     public void create(Video entity) {
         try {
@@ -74,9 +83,9 @@ public class VideoDAOImpl implements VideoDAO {
     }
 
     @Override
-    public List<String> findByFavorite() {
-        String jpql = "select f.videoid.title from Favorite f";
-        TypedQuery<String> query = em.createQuery(jpql,String.class);
+    public List<Video> findByFavorite() {
+        String jpql = "select f.videoid from Favorite f";
+        TypedQuery<Video> query = em.createQuery(jpql,Video.class);
         return query.getResultList();
     }
 
@@ -91,7 +100,7 @@ public class VideoDAOImpl implements VideoDAO {
     public List<Video> findByFavoriteByUser(String userId) {
         String jpql = "SELECT v FROM Video v JOIN v.favorites f WHERE f.userid = :userId";
         TypedQuery<Video> query = em.createQuery(jpql, Video.class);
-        query.setParameter("userId", new UsersDAOImpl().findById(userId));
+        query.setParameter("userId", new UsersDAOImpl().findByIdOrEmail(userId));
         return query.getResultList();
     }
 
@@ -117,5 +126,12 @@ public class VideoDAOImpl implements VideoDAO {
             map.put((String) obj[0], (Long) obj[1]);
         }
         return map;
+    }
+
+    @Override
+    public List<Video> findVideoNoLike() {
+        String jpql = "SELECT v FROM Video v JOIN v.favorites f WHERE f.userid IS NULL";
+        TypedQuery<Video> query = em.createQuery(jpql, Video.class);
+        return query.getResultList();
     }
 }

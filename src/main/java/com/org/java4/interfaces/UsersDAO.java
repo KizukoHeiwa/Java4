@@ -8,7 +8,7 @@ public interface UsersDAO {
     /**Truy vấn tất cả*/
     List<Users> findAll();
     /**Truy vấn theo mã*/
-    Users findById(String id);
+    Users findByIdOrEmail(String search);
     /**Thêm mới*/
     void create(Users item);
     /**Cập nhật*/

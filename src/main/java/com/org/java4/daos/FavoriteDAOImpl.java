@@ -60,7 +60,7 @@ public class FavoriteDAOImpl implements FavoriteDAO {
     public List<Favorite> findByUserId(String userId) {
         String sql = "SELECT f FROM Favorite f JOIN f.videoid WHERE f.userid = :userId";
         TypedQuery<Favorite> query = em.createQuery(sql, Favorite.class);
-        query.setParameter("userId", new UsersDAOImpl().findById(userId));
+        query.setParameter("userId", new UsersDAOImpl().findByIdOrEmail(userId));
         return query.getResultList();
     }
 

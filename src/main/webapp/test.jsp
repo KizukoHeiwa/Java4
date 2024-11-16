@@ -24,8 +24,18 @@
         </form>
         <div class="bai3">
             <h1>${userFavs[0].userid.fullname}</h1>
-            <c:forEach var="userFav" items="${userFavs}"><h3>${userFav.videoid.title}</h3></c:forEach>
+                <table class="table table-hover table-primary">
+                    <tbody>
+                    <c:forEach var="userFav" items="${userFavs}">
+                        <tr>
+                            <td>${userFav.videoid.title}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
         </div>
+
+        <h1>List liked video</h1>
         <div class="bai4">
             <table class="table table-striped table-hover">
                 <thead>
@@ -46,6 +56,67 @@
                 </tbody>
             </table>
         </div>
+
+        <form method="get" class="w-25 mx-auto d-flex">
+            <input type="text" name="keyword" class="form-control" placeholder="Search video">
+            <button class="btn btn-success" formaction="${url}">Search</button>
+        </form>
+        <div class="lab41">
+            <h1>Search Video by title</h1>
+            <table class="table table-hover table-secondary">
+                <thead>
+                    <tr>
+                        <td>Id</td>
+                        <td>Title</td>
+                        <td>Poster</td>
+                        <td>Views</td>
+                        <td>Description</td>
+                        <td>Active</td>
+                    </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="video" items="${listVideo}">
+                    <tr>
+                        <td>${video.id}</td>
+                        <td>${video.title}</td>
+                        <td>${video.poster}</td>
+                        <td>${video.views}</td>
+                        <td>${video.description}</td>
+                        <td>${video.active}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="lab41">
+            <h1>Top 10 Fav Video</h1>
+            <table class="table table-hover table-success">
+                <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Title</td>
+                    <td>Poster</td>
+                    <td>Views</td>
+                    <td>Description</td>
+                    <td>Active</td>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="video" items="${listFavVideo}">
+                    <tr>
+                        <td>${video.id}</td>
+                        <td>${video.title}</td>
+                        <td>${video.poster}</td>
+                        <td>${video.views}</td>
+                        <td>${video.description}</td>
+                        <td>${video.active}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </body>
 </html>
