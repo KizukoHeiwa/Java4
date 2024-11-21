@@ -31,7 +31,7 @@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        <i class="fa-solid fa-user"></i> ${sessionScope.get("user")==null?"Tài khoản":sessionScope.user.fullname}
+                        <i class="fa-solid fa-user"></i> ${sessionScope.get("user")==null?"Tài khoản":sessionScope.user.fullname}<span class="text-danger">${param.auth == 0?" <-- Tài khoản không được cấp quyền truy cập!":""}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")!=null?"hidden":""} role="button" data-bs-toggle="modal" data-bs-target="#login">Đăng nhập</a></li>
@@ -61,91 +61,6 @@
     <h2 class="text-center">Video theo phổ biến</h2>
     <!-- Videos -->
     <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail">
-                    <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                    <div class="card-body">
-                        <h5 class="card-title">Video 1</h5>
-                        <div class="btn-wrapper float-end mb-3">
-                            <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                            <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                    class="fas fa-share"></i> Share</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail">
-                    <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                    <div class="card-body">
-                        <h5 class="card-title">Video 1</h5>
-                        <div class="btn-wrapper float-end mb-3">
-                            <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                            <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                    class="fas fa-share"></i> Share</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail">
-                    <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                    <div class="card-body">
-                        <h5 class="card-title">Video 1</h5>
-                        <div class="btn-wrapper float-end mb-3">
-                            <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                            <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                    class="fas fa-share"></i> Share</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail">
-                    <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                    <div class="card-body">
-                        <h5 class="card-title">Video 1</h5>
-                        <div class="btn-wrapper float-end mb-3">
-                            <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                            <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                    class="fas fa-share"></i> Share</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail">
-                    <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                    <div class="card-body">
-                        <h5 class="card-title">Video 1</h5>
-                        <div class="btn-wrapper float-end mb-3">
-                            <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                            <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                    class="fas fa-share"></i> Share</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
         <div class="col-md-4 mb-4">
             <div class="card">
                 <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail">
@@ -193,7 +108,7 @@
                 <form class="was-validated">
                     <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <label class="form-label" for="email">Gửi tới email:</label>
+                        <label class="form-label">Gửi tới email:</label>
                         <input type="email" class="form-control" required />
                     </div>
 
@@ -233,6 +148,8 @@
                         <input type="checkbox" class="form-check-input" name="remember">
                         <label class="form-check-label">Remember me</label>
 
+                        <div class="text-danger">${param.login == 1?"Sai email hoặc mật khẩu!"
+                        :param.login == 0?"Bạn phải đăng nhập mới sử dụng được chức năng này!":""}</div>
                     </div>
                     <!-- Submit button -->
                     <button formaction="/index" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Login</button>
@@ -263,7 +180,7 @@
                     <div data-mdb-input-init class="form-outline mb-4">
                         <div class="row">
                             <div class="col-6">
-                                <label class="form-label" for="username">Username:</label>
+                                <label class="form-label">Username:</label>
                                 <input type="text" class="form-control"name="username" required />
 
                                 <label class="form-label">Fullname:</label>

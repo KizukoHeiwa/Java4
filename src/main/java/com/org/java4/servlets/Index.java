@@ -1,6 +1,9 @@
 package com.org.java4.servlets;
 
 import com.org.java4.daos.UsersDAOImpl;
+import com.org.java4.daos.VideoDAOImpl;
+import com.org.java4.entities.Users;
+import com.org.java4.entities.Video;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet({"/", "/index"})
 public class Index extends HttpServlet {
@@ -18,6 +22,10 @@ public class Index extends HttpServlet {
                 req.getSession().setAttribute("user", null);
             }
         }
+
+        List<Video> listVideos = new VideoDAOImpl().findAll();
+        req.setAttribute("listVideos", listVideos);
+
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 
@@ -25,10 +33,20 @@ public class Index extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
+        Users user = null;
+        try {
+            user = new UsersDAOImpl().findByIdOrEmail(email);
 
-        if (new UsersDAOImpl().findByIdOrEmail(email) != null && new UsersDAOImpl().findByIdOrEmail(email).getPassword().equals(password)) {
-            req.getSession().setAttribute("user", new UsersDAOImpl().findByIdOrEmail(email));
+        } catch (Exception e) {
+            resp.sendRedirect(req.getContextPath() + "/index?login=1");
+            return;
         }
+
+        if (!user.getPassword().equals(password)) {
+            resp.sendRedirect(req.getContextPath() + "/index?login=1");
+            return;
+        }
+        req.getSession().setAttribute("user", user);
 
         String secureURI = (String) req.getSession().getAttribute("secureURI");
         if (secureURI != null) {

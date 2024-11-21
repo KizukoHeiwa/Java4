@@ -24,7 +24,10 @@ public class AuthFilter implements Filter {
         Users user = (Users) session.getAttribute("user");
         if (user == null) {
             session.setAttribute("secureURI", req.getRequestURI());
-            resp.sendRedirect(req.getContextPath() + "/index?login");
+            resp.sendRedirect(req.getContextPath() + "/index?login=0");
+        } else if (!user.getAdmin()){
+            session.setAttribute("secureURI", req.getRequestURI());
+            resp.sendRedirect(req.getContextPath() + "/index?auth=0");
         } else {
             chain.doFilter(request, response);
         }
