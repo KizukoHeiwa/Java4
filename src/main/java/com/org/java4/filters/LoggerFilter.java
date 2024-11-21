@@ -24,7 +24,12 @@ public class LoggerFilter extends HttpFilter {
         Log log = new Log();
         log.setUri(uri);
         log.setTime(time.toInstant());
-        log.setUsername(user.getFullname());
+        if (user == null) {
+            log.setUsername("Guest");
+        }
+        else {
+            log.setUsername(user.getFullname());
+        }
 
         new LogDAOImpl().create(log);
 

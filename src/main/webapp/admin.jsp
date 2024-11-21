@@ -33,6 +33,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")!=null?"hidden":""} role="button" data-bs-toggle="modal" data-bs-target="#login">Đăng nhập</a></li>
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")==null?"hidden":""}>Thông tin tài khoản</a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin" ${sessionScope.get("user").admin?"":"hidden"}>Administration tools</a></li>
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")==null?"hidden":""}>Đổi mật khẩu</a></li>
                         <li><a class="dropdown-item" href="#">Quên mật khẩu</a></li>
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/index?logout" ${sessionScope.get("user")==null?"hidden":""}>Đăng xuất</a></li>
@@ -40,21 +41,32 @@
                     </ul>
                 </li>
             </ul>
-            <!-- <ul class="navbar-nav d-flex">
-                  <li class="nav-item">
-                    <a class="nav-link">Tiếng Việt</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link">Tiếng Anh</a>
-                  </li>
-                </ul> -->
+
+            <ul class="navbar-nav d-flex">
+                <li class="nav-item">
+                    <button class="btn" data-bs-toggle="collapse" data-bs-target="#home">Home</button>
+                </li>
+
+                <li class="nav-item">
+                    <button class="btn" data-bs-toggle="collapse" data-bs-target="#videos">Videos</button>
+                </li>
+
+                <li class="nav-item">
+                    <button class="btn" data-bs-toggle="collapse" data-bs-target="#users">Users</button>
+                </li>
+
+                <li class="nav-item">
+                    <button class="btn" data-bs-toggle="collapse" data-bs-target="#reports">Reports</button>
+                </li>
+
+            </ul>
         </div>
     </div>
 </nav>
 
 
 <!-- Main Content -->
-<div class="container accordion-flush my-4" id="mainGroup">
+<div class="container accordion-flush my-4 min-vh-100" id="mainGroup">
     <!-- Home -->
     <div class="accordion-collapse collapse my-4 fade" id="home" data-bs-parent="#mainGroup">
 
@@ -340,6 +352,13 @@
     </div>
 
 </div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center p-4">
+    &copy;Copyright by Hoàng Thụy<br>
+    ${sessionScope.get("guestCount")} người xem
+</footer>
 </body>
+
 
 </html>

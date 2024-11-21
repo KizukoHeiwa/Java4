@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -25,16 +26,17 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-heart"></i> Video đã thích</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/likedVideos"><i class="fa-solid fa-heart"></i> Video đã thích</a>
                 </li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        <i class="fa-solid fa-user"></i> ${sessionScope.get("user")==null?"Tài khoản":sessionScope.user.fullname}
+                        <i class="fa-solid fa-user"></i> ${sessionScope.get("user")==null?"Tài khoản":sessionScope.user.fullname}<span class="text-danger">${param.auth == 0?" <-- Tài khoản không được cấp quyền truy cập!":""}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")!=null?"hidden":""} role="button" data-bs-toggle="modal" data-bs-target="#login">Đăng nhập</a></li>
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")==null?"hidden":""}>Thông tin tài khoản</a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin" ${sessionScope.get("user").admin?"":"hidden"}>Administration tools</a></li>
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")==null?"hidden":""}>Đổi mật khẩu</a></li>
                         <li><a class="dropdown-item" href="#">Quên mật khẩu</a></li>
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/index?logout" ${sessionScope.get("user")==null?"hidden":""}>Đăng xuất</a></li>
@@ -54,19 +56,18 @@
     </div>
 </nav>
 
-
 <!-- Main Content -->
 <div class="container my-4">
     <div class="row">
         <div class="col-md-9 mb-4">
             <div class="card">
-                <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://www.youtube.com/embed/${fn:substring(video.poster, 17, -1)}"></iframe>
+                </div>
                 <div class="card-body">
-                    <h4 class="card-title">Video 1</h4>
+                    <h4 class="card-title">${video.title}</h4>
                     <div class="description">
-                        <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, laboriosam obcaecati, quod ipsam
-                            doloribus voluptas dignissimos maiores labore eum, quia porro repudiandae. Accusamus, aut dolor
-                            assumenda incidunt mollitia dicta nam.</h6>
+                        <h6>${video.description}</h6>
                     </div>
                     <div class="btn-wrapper float-end">
                         <!-- <i class="fa-solid fa-thumbs-up"></i> -->
@@ -79,32 +80,22 @@
         </div>
 
         <div class="col-md-3 mb-4">
-            <div class="d-flex align-items-center gap-2 p-2 mb-3 border rounded-2">
-                <img src="https://placehold.co/600x400" class="float-start" alt="thumbnail" width="100px">
-                <h6>Video 1</h6>
-            </div>
-
-            <div class="d-flex align-items-center gap-2 p-2 mb-3 border rounded-2">
-                <img src="https://placehold.co/600x400" class="float-start" alt="thumbnail" width="100px">
-                <h6>Video 1</h6>
-            </div>
-
-            <div class="d-flex align-items-center gap-2 p-2 mb-3 border rounded-2">
-                <img src="https://placehold.co/600x400" class="float-start" alt="thumbnail" width="100px">
-                <h6>Video 1</h6>
-            </div>
-
-            <div class="d-flex align-items-center gap-2 p-2 mb-3 border rounded-2">
-                <img src="https://placehold.co/600x400" class="float-start" alt="thumbnail" width="100px">
-                <h6>Video 1</h6>
-            </div>
+            <c:forEach items="${listVideos}" var="video">
+                <c:set var="ytbId" value="${fn:substring(video.poster, 17, 28)}"/>
+                    <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail?id=${video.id}">
+                        <div class="d-flex align-items-center gap-2 p-2 mb-3 border rounded-2">
+                                <img src="https://img.youtube.com/vi/${ytbId}/hqdefault.jpg" class="float-start" alt="thumbnail" width="100px">
+                                <h6>${video.title}</h6>
+                        </div>
+                    </a>
+            </c:forEach>
 
         </div>
     </div>
 </div>
 
 <!-- Footer -->
-<footer class="bg-dark text-white text-center p-4">
+<footer class="bg-dark text-white text-center p-4 fixed-bottom">
     &copy;Copyright by Hoàng Thụy<br>
     ${sessionScope.get("guestCount")} người xem
 </footer>

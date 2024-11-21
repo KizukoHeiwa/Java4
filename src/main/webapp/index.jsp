@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -17,6 +18,7 @@
 
 <c:if test="${!empty sessionScope.user}"/>
 <c:if test="${!empty sessionScope.guestCount}"/>
+<c:set var="pageNumber" value="${pageNumber}" scope="request"/>
 <body>
 <nav class="navbar navbar-expand-sm bg-secondary-subtle">
     <div class="container">
@@ -36,9 +38,10 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")!=null?"hidden":""} role="button" data-bs-toggle="modal" data-bs-target="#login">Đăng nhập</a></li>
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")==null?"hidden":""}>Thông tin tài khoản</a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin" ${sessionScope.get("user").admin?"":"hidden"}>Administration tools</a></li>
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")==null?"hidden":""}>Đổi mật khẩu</a></li>
                         <li><a class="dropdown-item" href="#">Quên mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/index?logout" ${sessionScope.get("user")==null?"hidden":""}>Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/?logout" ${sessionScope.get("user")==null?"hidden":""}>Đăng xuất</a></li>
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")!=null?"hidden":""} role="button" data-bs-toggle="modal" data-bs-target="#signUp">Đăng ký</a></li>
                     </ul>
                 </li>
@@ -57,39 +60,42 @@
 
 
 <!-- Main Content -->
-<div class="container my-4">
+<div class="container my-4 min-vh-100">
     <h2 class="text-center">Video theo phổ biến</h2>
     <!-- Videos -->
     <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail">
-                    <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                    <div class="card-body">
-                        <h5 class="card-title">Video 1</h5>
-                        <div class="btn-wrapper float-end mb-3">
-                            <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                            <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                    class="fas fa-share"></i> Share</button>
+        <c:forEach items="${listVideos}" var="video">
+            <c:set var="ytbId" value="${fn:substring(video.poster, 17, 28)}"/>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail?id=${video.id}">
+                        <img src="https://img.youtube.com/vi/${ytbId}/hqdefault.jpg" class="card-img-top" alt="Poster">
+                        <div class="card-body">
+                            <h5 class="card-title">${video.title}</h5>
+                            <div class="btn-wrapper float-end mb-3">
+                                <!-- <i class="fa-solid fa-thumbs-up"></i> -->
+                                <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
+                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
+                                        class="fas fa-share"></i> Share</button>
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
-        </div>
+        </c:forEach>
 
     </div>
 
     <div class="btn-wrapper text-center">
-        <button class="btn btn-secondary"><i class="fas fa-fast-backward"></i></button>
-        <button class="btn btn-secondary"><i class="fa-solid fa-left-long"></i></button>
-        <button class="btn btn-secondary"><i class="fa-solid fa-right-long"></i></button>
-        <button class="btn btn-secondary"><i class="fas fa-fast-forward"></i></button>
+        <a role="button" class="btn btn-secondary" href="?page=${0}"><i class="fas fa-fast-backward"></i></a>
+        <a role="button" class="btn btn-secondary" href="?page=${(pageNumber-1 < 0)?pageNumber:pageNumber-1}"><i class="fa-solid fa-left-long"></i></a>
+        <a role="button" class="btn btn-secondary" href="?page=${(pageNumber+1) > endPage?pageNumber:pageNumber+1}"><i class="fa-solid fa-right-long"></i></a>
+        <a role="button" class="btn btn-secondary" href="?page=${endPage}"><i class="fas fa-fast-forward"></i></a>
     </div>
 </div>
 
 <!-- Footer -->
-<footer class="bg-dark text-white text-center p-4">
+<footer class="footer bg-dark text-white text-center p-4">
     &copy;Copyright by Hoàng Thụy<br>
     ${sessionScope.get("guestCount")} người xem
 </footer>
@@ -152,7 +158,7 @@
                         :param.login == 0?"Bạn phải đăng nhập mới sử dụng được chức năng này!":""}</div>
                     </div>
                     <!-- Submit button -->
-                    <button formaction="/index" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Login</button>
+                    <button formaction="/" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Login</button>
                 </form>
             </div>
             <!-- Modal footer -->

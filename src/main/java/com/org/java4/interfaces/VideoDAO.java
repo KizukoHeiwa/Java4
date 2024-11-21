@@ -9,6 +9,10 @@ import java.util.Objects;
 public interface VideoDAO {
     /**Truy vấn tất cả*/
     List<Video> findAll();
+    /**Truy vấn theo trang*/
+    List<Video> findByPage(int pageNumber, int pageSize);
+    /**Đếm số lượng video*/
+    int quantity();
     /**Truy vấn theo mã*/
     Video findById(String id);
     /**Tìm video theo keyword Title*/

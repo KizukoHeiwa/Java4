@@ -22,6 +22,25 @@ public class VideoDAOImpl implements VideoDAO {
         TypedQuery<Video> query = em.createQuery(jpql, Video.class);
         return query.getResultList();
     }
+
+    @Override
+    public List<Video> findByPage(int pageNumber, int pageSize) {
+        TypedQuery<Video> query = em.createQuery("SELECT v FROM Video v", Video.class);
+
+        // Đặt vị trí bắt đầu cho phân trang (pageNumber tính từ 0)
+        query.setFirstResult(pageNumber * pageSize);
+
+        // Đặt số lượng kết quả tối đa mỗi lần truy vấn (pageSize)
+        query.setMaxResults(pageSize);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public int quantity() {
+        return this.findAll().size();
+    }
+
     @Override
     public Video findById(String id) {
         return em.find(Video.class, id);

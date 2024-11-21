@@ -3,7 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
-    
+
+    <welcome-file-list>
+        <welcome-file>index</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>Index</servlet-name>
+        <servlet-class>com.org.java4.servlets.Index</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/</url-pattern>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+
     <filter-mapping>
         <filter-name>filter2</filter-name>
         <url-pattern>/testFilter</url-pattern>

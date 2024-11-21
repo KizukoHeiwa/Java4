@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter({"/admin/*","/videoDetail", "/likedVideos"})
+@WebFilter({"/admin/*", "/likedVideos"})
 public class AuthFilter implements Filter {
     @Override
     public void destroy() {
@@ -24,10 +24,10 @@ public class AuthFilter implements Filter {
         Users user = (Users) session.getAttribute("user");
         if (user == null) {
             session.setAttribute("secureURI", req.getRequestURI());
-            resp.sendRedirect(req.getContextPath() + "/index?login=0");
-        } else if (!user.getAdmin()){
+            resp.sendRedirect(req.getContextPath() + "/?login=0");
+        } else if (!user.getAdmin() && req.getRequestURI().contains("admin")) {
             session.setAttribute("secureURI", req.getRequestURI());
-            resp.sendRedirect(req.getContextPath() + "/index?auth=0");
+            resp.sendRedirect(req.getContextPath() + "/?auth=0");
         } else {
             chain.doFilter(request, response);
         }
