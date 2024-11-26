@@ -181,24 +181,24 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="was-validated">
+                <form class="was-validated" method="post">
                     <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-4">
                         <div class="row">
                             <div class="col-6">
                                 <label class="form-label">Username:</label>
-                                <input type="text" class="form-control"name="username" required />
+                                <input type="text" class="form-control"name="id" required />
 
-                                <label class="form-label">Fullname:</label>
-                                <input type="text" class="form-control" name="fullname" required />
+                                <label class="form-label">Email:</label>
+                                <input type="email" class="form-control" name="email" required />
                             </div>
 
                             <div class="col-6">
-                                <label class="form-label">Password:</label>
-                                <input type="text" class="form-control" required />
+                                <label class="form-label">Fullname:</label>
+                                <input type="text" class="form-control" name="fullname" required />
 
-                                <label class="form-label">Username:</label>
-                                <input type="text" class="form-control" name="email" required />
+                                <label class="form-label">Password:</label>
+                                <input type="password" class="form-control" name="password" required />
 
                             </div>
                         </div>
@@ -206,7 +206,7 @@
                     </div>
 
                     <!-- Submit button -->
-                    <button data-mdb-ripple-init type="button" class="btn btn-success btn-block mb-4">Sign Up</button>
+                    <button formaction="/?reg=1" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Sign Up</button>
                 </form>
             </div>
             <!-- Modal footer -->

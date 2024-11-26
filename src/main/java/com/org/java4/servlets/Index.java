@@ -45,14 +45,26 @@ public class Index extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        Users user = null;
+        String fullname = req.getParameter("fullname");
+        String id = req.getParameter("id");
+        Users user = new Users();
         try {
             user = new UsersDAOImpl().findByIdOrEmail(email);
-
         } catch (Exception e) {
             resp.sendRedirect(req.getContextPath() + "/?login=1");
             return;
         }
+
+        if (req.getQueryString() != null) {
+            if (user.getId().isEmpty() && req.getQueryString().contains("reg")) {
+                user.setId(id);
+                user.setPassword(password);
+                user.setFullname(fullname);
+                user.setEmail(email);
+                new UsersDAOImpl().create(user);
+            }
+        }
+
 
         if (!user.getPassword().equals(password)) {
             resp.sendRedirect(req.getContextPath() + "/?login=1");

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -14,6 +15,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+<c:url value="/admin" var="url"/>
 <body>
 <nav class="navbar navbar-expand-sm bg-secondary-subtle">
     <div class="container">
@@ -48,15 +50,15 @@
                 </li>
 
                 <li class="nav-item">
-                    <button class="btn" data-bs-toggle="collapse" data-bs-target="#videos">Videos</button>
+                    <button class="btn" id="btnVideos" data-bs-toggle="collapse" data-bs-target="#videos">Videos</button>
                 </li>
 
                 <li class="nav-item">
-                    <button class="btn" data-bs-toggle="collapse" data-bs-target="#users">Users</button>
+                    <button class="btn" id="btnUsers" data-bs-toggle="collapse" data-bs-target="#users">Users</button>
                 </li>
 
                 <li class="nav-item">
-                    <button class="btn" data-bs-toggle="collapse" data-bs-target="#reports">Reports</button>
+                    <button class="btn" id="btnReports" data-bs-toggle="collapse" data-bs-target="#reports">Reports</button>
                 </li>
 
             </ul>
@@ -64,16 +66,21 @@
     </div>
 </nav>
 
+<!-- Footer -->
+<footer class="bg-dark text-white text-center p-4 fixed-bottom">
+    &copy;Copyright by Hoàng Thụy<br>
+    ${sessionScope.get("guestCount")} người xem
+</footer>
 
 <!-- Main Content -->
-<div class="container accordion-flush my-4 min-vh-100" id="mainGroup">
+<div class="container accordion my-4 min-vh-100" id="mainGroup">
     <!-- Home -->
     <div class="accordion-collapse collapse my-4 fade" id="home" data-bs-parent="#mainGroup">
 
     </div>
 
     <!-- Videos -->
-    <div class="accordion-collapse collapse my-4 fade" id="videos" data-bs-parent="#mainGroup">
+    <div class="accordion-collapse collapse my-4 fade ${param.video!=null?"show":""}" id="videos" data-bs-parent="#mainGroup">
         <div class="container">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
@@ -134,13 +141,15 @@
                         </thead>
 
                         <tbody>
-                        <tr>
-                            <td>123</td>
-                            <td>123</td>
-                            <td>123</td>
-                            <td>123</td>
-                            <td><a href="#">Edit</a></td>
-                        </tr>
+                        <c:forEach items="${listVideos}" var="video">
+                            <tr>
+                                <td>${video.id}</td>
+                                <td>${video.title}</td>
+                                <td>${video.views}</td>
+                                <td>${video.active?"Active":"Inactive"}</td>
+                                <td><a href="${url}/edit?video=${video.id}">Edit</a></td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
 
@@ -164,7 +173,7 @@
     </div>
 
     <!-- Users -->
-    <div class="accordion-collapse collapse my-4 fade" id="users" data-bs-parent="#mainGroup">
+    <div class="accordion-collapse collapse my-4 fade ${param.user!=null?"show":""}" id="users" data-bs-parent="#mainGroup">
         <div class="container">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
@@ -218,14 +227,16 @@
                         </thead>
 
                         <tbody>
-                        <tr>
-                            <td>123</td>
-                            <td>123</td>
-                            <td>123</td>
-                            <td>123</td>
-                            <td>123</td>
-                            <td><a href="#">Edit</a></td>
-                        </tr>
+                        <c:forEach items="${listUsers}" var="user">
+                            <tr>
+                                <td>${user.username}</td>
+                                <td>${user.password}</td>
+                                <td>${user.fullname}</td>
+                                <td>${user.email}</td>
+                                <td>${user.role?"Admin":"User"}</td>
+                                <td><a href="${url}/edit?user=${user.id}">Edit</a></td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
 
@@ -353,12 +364,5 @@
 
 </div>
 
-<!-- Footer -->
-<footer class="bg-dark text-white text-center p-4">
-    &copy;Copyright by Hoàng Thụy<br>
-    ${sessionScope.get("guestCount")} người xem
-</footer>
 </body>
-
-
 </html>
