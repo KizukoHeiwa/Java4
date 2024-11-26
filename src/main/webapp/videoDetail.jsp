@@ -72,9 +72,11 @@
                     </div>
                     <div class="btn-wrapper float-end">
                         <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                        <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                class="fas fa-share"></i> Share</button>
+                        <form method="post">
+                            <button formaction="${url}&like" type="submit" class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
+                                    class="fas fa-share"></i> Share</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -112,16 +114,36 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="was-validated">
+                <form class="was-validated" method="post">
                     <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-4">
                         <label class="form-label">Gửi tới email:</label>
-                        <input type="email" class="form-control" required />
+                        <input type="email" class="form-control" name="toEmail" required />
+                        <div class="text-success">${param.share == 1?"Share thành công!":""}</div>
                     </div>
 
+
                     <!-- Submit button -->
-                    <button data-mdb-ripple-init type="button" class="btn btn-success btn-block mb-4">Send</button>
+                    <button formaction="${url}&share=1" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Send</button>
                 </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Like box modal -->
+<div class="modal" id="like">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Like thành công!</h4>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
@@ -159,7 +181,7 @@
                                 :param.login == 0?"Bạn phải đăng nhập mới sử dụng được chức năng này!":""}</div>
                     </div>
                     <!-- Submit button -->
-                    <button formaction="" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Login</button>
+                    <button formaction="${url}" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Login</button>
                 </form>
             </div>
             <!-- Modal footer -->
@@ -232,6 +254,20 @@
     <span id="signUp-modal-trigger" data-bs-toggle="modal" data-bs-target="#signUp" style="display: none;"></span>
     <script>
         document.getElementById('signUp-modal-trigger').click();
+    </script>
+</c:if>
+
+<c:if test="${param.share != null}">
+    <span id="share-modal-trigger" data-bs-toggle="modal" data-bs-target="#share" style="display: none;"></span>
+    <script>
+        document.getElementById('share-modal-trigger').click();
+    </script>
+</c:if>
+
+<c:if test="${param.like != null}">
+    <span id="like-modal-trigger" data-bs-toggle="modal" data-bs-target="#like" style="display: none;"></span>
+    <script>
+        document.getElementById('like-modal-trigger').click();
     </script>
 </c:if>
 

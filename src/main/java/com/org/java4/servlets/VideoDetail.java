@@ -1,9 +1,15 @@
 package com.org.java4.servlets;
 
+import com.org.java4.daos.FavoriteDAOImpl;
+import com.org.java4.daos.ShareDAOImpl;
 import com.org.java4.daos.UsersDAOImpl;
 import com.org.java4.daos.VideoDAOImpl;
+import com.org.java4.entities.Favorite;
+import com.org.java4.entities.Share;
 import com.org.java4.entities.Users;
 import com.org.java4.entities.Video;
+import com.org.java4.utils.Mailer;
+import com.org.java4.utils.XDate;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,6 +17,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet("/videoDetail")
@@ -49,7 +57,7 @@ public class VideoDetail extends HttpServlet {
         if (req.getQueryString() != null) {
             if (req.getQueryString().contains("reg")) {
                 if (isLogin) {
-                    resp.sendRedirect(req.getContextPath() + "/?reg=0");
+                    resp.sendRedirect(req.getContextPath() + "/videoDetail?id=" + req.getParameter("id") + "&reg=0");
                     return;
                 }
                 else {
@@ -61,11 +69,57 @@ public class VideoDetail extends HttpServlet {
                     new UsersDAOImpl().create(user);
                 }
             }
+
+            if (req.getQueryString().contains("share=1")) {
+                if (req.getSession().getAttribute("user") != null) {
+                    user = (Users) req.getSession().getAttribute("user");
+                    String from = user.getEmail();
+                    String to = req.getParameter("toEmail");
+                    String subject = user.getFullname() + " đã share video này tới bạn!";
+                    String body = "Đường dẫn tới link video: " + req.getRequestURL() + "?id=" + req.getParameter("id");
+
+                    Mailer.sendEmail(from, to, subject, body);
+
+                    String date = XDate.toString(new Date(), "yyyyMMddHHmmss");
+
+                    Share share = new Share();
+                    share.setId(date);
+                    share.setUserid(user);
+                    share.setVideoid(new VideoDAOImpl().findById(req.getParameter("id")));
+                    share.setEmails(to);
+                    share.setSharedate(LocalDate.now());
+                    new ShareDAOImpl().create(share);
+                }
+                else {
+                    resp.sendRedirect(req.getContextPath() + "/videoDetail?id=" + req.getParameter("id") + "&login=0");
+                    return;
+                }
+            }
+
+            if (req.getQueryString().contains("like")) {
+                if (req.getSession().getAttribute("user") != null) {
+                    user = (Users) req.getSession().getAttribute("user");
+
+                    String date = XDate.toString(new Date(), "yyyyMMddHHmmss");
+
+                    Favorite likedVideo = new Favorite();
+                    likedVideo.setId(date);
+                    likedVideo.setUserid(user);
+                    likedVideo.setVideoid(new VideoDAOImpl().findById(req.getParameter("id")));
+                    likedVideo.setLikedate(LocalDate.now());
+                    new FavoriteDAOImpl().create(likedVideo);
+                }
+                else {
+                    resp.sendRedirect(req.getContextPath() + "/videoDetail?id=" + req.getParameter("id") + "&login=0");
+                    return;
+                }
+            }
+
         }
 
 
         if (isLogin && !user.getPassword().equals(password)) {
-            resp.sendRedirect(req.getContextPath() + "/?login=1");
+            resp.sendRedirect(req.getContextPath() + "/videoDetail?id=" + req.getParameter("id") + "&login=1");
             return;
         }
         req.getSession().setAttribute("user", user);
