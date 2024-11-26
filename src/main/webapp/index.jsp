@@ -70,6 +70,7 @@
                 <div class="card">
                     <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail?id=${video.id}">
                         <img src="https://img.youtube.com/vi/${ytbId}/hqdefault.jpg" class="card-img-top" alt="Poster">
+                    </a>
                         <div class="card-body">
                             <h5 class="card-title">${video.title}</h5>
                             <div class="btn-wrapper float-end mb-3">
@@ -79,7 +80,6 @@
                                         class="fas fa-share"></i> Share</button>
                             </div>
                         </div>
-                    </a>
                 </div>
             </div>
         </c:forEach>
@@ -145,8 +145,8 @@
                 <form class="was-validated" method="post">
                     <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <label class="form-label">Email:</label>
-                        <input type="email" name="email" class="form-control" required />
+                        <label class="form-label">Email hoặc Username:</label>
+                        <input type="text" name="email" class="form-control" required />
 
                         <label class="form-label">Password:</label>
                         <input type="password" name="password" class="form-control" required />
@@ -158,7 +158,7 @@
                         :param.login == 0?"Bạn phải đăng nhập mới sử dụng được chức năng này!":""}</div>
                     </div>
                     <!-- Submit button -->
-                    <button formaction="/" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Login</button>
+                    <button formaction="" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Login</button>
                 </form>
             </div>
             <!-- Modal footer -->
@@ -189,24 +189,26 @@
                                 <label class="form-label">Username:</label>
                                 <input type="text" class="form-control"name="id" required />
 
-                                <label class="form-label">Email:</label>
-                                <input type="email" class="form-control" name="email" required />
+                                <label class="form-label">Password:</label>
+                                <input type="password" class="form-control" name="password" required />
                             </div>
 
                             <div class="col-6">
                                 <label class="form-label">Fullname:</label>
                                 <input type="text" class="form-control" name="fullname" required />
 
-                                <label class="form-label">Password:</label>
-                                <input type="password" class="form-control" name="password" required />
+                                <label class="form-label">Email:</label>
+                                <input type="email" class="form-control" name="email" required />
 
                             </div>
+
+                            <div class="text-danger">${param.reg == 0?"Username đã tồn tại!":""}</div>
                         </div>
 
                     </div>
 
                     <!-- Submit button -->
-                    <button formaction="/?reg=1" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Sign Up</button>
+                    <button formaction="?reg=1" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Sign Up</button>
                 </form>
             </div>
             <!-- Modal footer -->
@@ -222,6 +224,13 @@
     <span id="login-modal-trigger" data-bs-toggle="modal" data-bs-target="#login" style="display: none;"></span>
     <script>
         document.getElementById('login-modal-trigger').click();
+    </script>
+</c:if>
+
+<c:if test="${param.reg == 0}">
+    <span id="signUp-modal-trigger" data-bs-toggle="modal" data-bs-target="#signUp" style="display: none;"></span>
+    <script>
+        document.getElementById('signUp-modal-trigger').click();
     </script>
 </c:if>
 

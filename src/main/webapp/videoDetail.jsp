@@ -17,6 +17,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <c:if test="${!empty sessionScope.user}"/>
+<c:url value="/videoDetail?id=${video.id}" var="url"/>
 <body>
 <nav class="navbar navbar-expand-sm bg-secondary-subtle">
     <div class="container">
@@ -39,7 +40,7 @@
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin" ${sessionScope.get("user").admin?"":"hidden"}>Administration tools</a></li>
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")==null?"hidden":""}>Đổi mật khẩu</a></li>
                         <li><a class="dropdown-item" href="#">Quên mật khẩu</a></li>
-                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/index?logout" ${sessionScope.get("user")==null?"hidden":""}>Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="${url}&logout" ${sessionScope.get("user")==null?"hidden":""}>Đăng xuất</a></li>
                         <li><a class="dropdown-item" href="#" ${sessionScope.get("user")!=null?"hidden":""} role="button" data-bs-toggle="modal" data-bs-target="#signUp">Đăng ký</a></li>
                     </ul>
                 </li>
@@ -114,7 +115,7 @@
                 <form class="was-validated">
                     <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <label class="form-label" for="email">Gửi tới email:</label>
+                        <label class="form-label">Gửi tới email:</label>
                         <input type="email" class="form-control" required />
                     </div>
 
@@ -145,8 +146,8 @@
                 <form class="was-validated" method="post">
                     <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <label class="form-label">Email:</label>
-                        <input type="email" name="email" class="form-control" required />
+                        <label class="form-label">Email hoặc Username:</label>
+                        <input type="text" name="email" class="form-control" required />
 
                         <label class="form-label">Password:</label>
                         <input type="password" name="password" class="form-control" required />
@@ -154,9 +155,11 @@
                         <input type="checkbox" class="form-check-input" name="remember">
                         <label class="form-check-label">Remember me</label>
 
+                        <div class="text-danger">${param.login == 1?"Sai email hoặc mật khẩu!"
+                                :param.login == 0?"Bạn phải đăng nhập mới sử dụng được chức năng này!":""}</div>
                     </div>
                     <!-- Submit button -->
-                    <button formaction="/index" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Login</button>
+                    <button formaction="" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Login</button>
                 </form>
             </div>
             <!-- Modal footer -->
@@ -179,32 +182,34 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="was-validated">
+                <form class="was-validated" method="post">
                     <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-4">
                         <div class="row">
                             <div class="col-6">
-                                <label class="form-label" for="username">Username:</label>
-                                <input type="text" class="form-control"name="username" required />
+                                <label class="form-label">Username:</label>
+                                <input type="text" class="form-control"name="id" required />
 
-                                <label class="form-label">Fullname:</label>
-                                <input type="text" class="form-control" name="fullname" required />
+                                <label class="form-label">Password:</label>
+                                <input type="password" class="form-control" name="password" required />
                             </div>
 
                             <div class="col-6">
-                                <label class="form-label">Password:</label>
-                                <input type="text" class="form-control" required />
+                                <label class="form-label">Fullname:</label>
+                                <input type="text" class="form-control" name="fullname" required />
 
-                                <label class="form-label">Username:</label>
-                                <input type="text" class="form-control" name="email" required />
+                                <label class="form-label">Email:</label>
+                                <input type="email" class="form-control" name="email" required />
 
                             </div>
+
+                            <div class="text-danger">${param.reg == 0?"Username đã tồn tại!":""}</div>
                         </div>
 
                     </div>
 
                     <!-- Submit button -->
-                    <button data-mdb-ripple-init type="button" class="btn btn-success btn-block mb-4">Sign Up</button>
+                    <button formaction="?reg=1" data-mdb-ripple-init type="submit" class="btn btn-success btn-block mb-4">Sign Up</button>
                 </form>
             </div>
             <!-- Modal footer -->
@@ -215,6 +220,20 @@
     </div>
 
 </div>
+
+<c:if test="${param.login != null}">
+    <span id="login-modal-trigger" data-bs-toggle="modal" data-bs-target="#login" style="display: none;"></span>
+    <script>
+        document.getElementById('login-modal-trigger').click();
+    </script>
+</c:if>
+
+<c:if test="${param.reg == 0}">
+    <span id="signUp-modal-trigger" data-bs-toggle="modal" data-bs-target="#signUp" style="display: none;"></span>
+    <script>
+        document.getElementById('signUp-modal-trigger').click();
+    </script>
+</c:if>
 
 </body>
 

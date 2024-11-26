@@ -5,7 +5,6 @@ import com.org.java4.daos.VideoDAOImpl;
 import com.org.java4.entities.Users;
 import com.org.java4.entities.Video;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -48,25 +47,32 @@ public class Index extends HttpServlet {
         String fullname = req.getParameter("fullname");
         String id = req.getParameter("id");
         Users user = new Users();
+        boolean isLogin = true;
         try {
             user = new UsersDAOImpl().findByIdOrEmail(email);
         } catch (Exception e) {
-            resp.sendRedirect(req.getContextPath() + "/?login=1");
-            return;
+            isLogin = false;
         }
 
         if (req.getQueryString() != null) {
-            if (user.getId().isEmpty() && req.getQueryString().contains("reg")) {
-                user.setId(id);
-                user.setPassword(password);
-                user.setFullname(fullname);
-                user.setEmail(email);
-                new UsersDAOImpl().create(user);
+            if (req.getQueryString().contains("reg")) {
+                if (isLogin) {
+                    resp.sendRedirect(req.getContextPath() + "/?reg=0");
+                    return;
+                }
+                else {
+                    user.setId(id);
+                    user.setPassword(password);
+                    user.setFullname(fullname);
+                    user.setEmail(email);
+                    user.setAdmin(false);
+                    new UsersDAOImpl().create(user);
+                }
             }
         }
 
 
-        if (!user.getPassword().equals(password)) {
+        if (isLogin && !user.getPassword().equals(password)) {
             resp.sendRedirect(req.getContextPath() + "/?login=1");
             return;
         }
