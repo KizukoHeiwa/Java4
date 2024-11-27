@@ -26,6 +26,8 @@ public class Index extends HttpServlet {
         if (req.getQueryString() != null) {
             if (req.getQueryString().contains("logout")) {
                 req.getSession().setAttribute("user", null);
+                resp.sendRedirect("/");
+                return;
             }
             if (req.getQueryString().contains("page")) {
                 pageNumber = Integer.parseInt(req.getParameter("page"));
@@ -46,7 +48,7 @@ public class Index extends HttpServlet {
         String password = req.getParameter("password");
         String fullname = req.getParameter("fullname");
         String id = req.getParameter("id");
-        Users user = new Users();
+        Users user = null;
         boolean isLogin = true;
         try {
             user = new UsersDAOImpl().findByIdOrEmail(email);
@@ -61,6 +63,7 @@ public class Index extends HttpServlet {
                     return;
                 }
                 else {
+                    user = new Users();
                     user.setId(id);
                     user.setPassword(password);
                     user.setFullname(fullname);
@@ -72,7 +75,7 @@ public class Index extends HttpServlet {
         }
 
 
-        if (isLogin && !user.getPassword().equals(password)) {
+        if (isLogin && !user.getPassword().equals(password) || user == null) {
             resp.sendRedirect(req.getContextPath() + "/?login=1");
             return;
         }

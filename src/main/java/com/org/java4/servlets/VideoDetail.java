@@ -31,6 +31,8 @@ public class VideoDetail extends HttpServlet {
             }
             if (req.getQueryString().contains("logout")) {
                 req.getSession().setAttribute("user", null);
+                resp.sendRedirect(req.getContextPath() + "/videoDetail?id=" + req.getParameter("id"));
+                return;
             }
         }
 
@@ -46,7 +48,7 @@ public class VideoDetail extends HttpServlet {
         String password = req.getParameter("password");
         String fullname = req.getParameter("fullname");
         String id = req.getParameter("id");
-        Users user = new Users();
+        Users user = null;
         boolean isLogin = true;
         try {
             user = new UsersDAOImpl().findByIdOrEmail(email);
@@ -61,6 +63,7 @@ public class VideoDetail extends HttpServlet {
                     return;
                 }
                 else {
+                    user = new Users();
                     user.setId(id);
                     user.setPassword(password);
                     user.setFullname(fullname);
@@ -118,7 +121,7 @@ public class VideoDetail extends HttpServlet {
         }
 
 
-        if (isLogin && !user.getPassword().equals(password)) {
+        if (isLogin && !user.getPassword().equals(password) || user == null) {
             resp.sendRedirect(req.getContextPath() + "/videoDetail?id=" + req.getParameter("id") + "&login=1");
             return;
         }

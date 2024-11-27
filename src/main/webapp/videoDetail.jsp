@@ -73,7 +73,7 @@
                     <div class="btn-wrapper float-end">
                         <!-- <i class="fa-solid fa-thumbs-up"></i> -->
                         <form method="post">
-                            <button formaction="${url}&like" type="submit" class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
+                            <button formaction="${url}&like=1" type="submit" class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
                                     class="fas fa-share"></i> Share</button>
                         </form>
@@ -98,7 +98,7 @@
 </div>
 
 <!-- Footer -->
-<footer class="bg-dark text-white text-center p-4 fixed-bottom">
+<footer class="bg-dark text-white text-center p-4">
     &copy;Copyright by Hoàng Thụy<br>
     ${sessionScope.get("guestCount")} người xem
 </footer>
@@ -264,7 +264,7 @@
     </script>
 </c:if>
 
-<c:if test="${param.like != null}">
+<c:if test="${param.like == 1}">
     <span id="like-modal-trigger" data-bs-toggle="modal" data-bs-target="#like" style="display: none;"></span>
     <script>
         document.getElementById('like-modal-trigger').click();
