@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -61,81 +62,34 @@
     <h2 class="text-center">Video đã thích</h2>
     <!-- Videos -->
     <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail">
-                    <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
+        <c:forEach items="${listVideos}" var="video">
+            <c:set var="ytbId" value="${fn:substring(video.poster, 17, 28)}"/>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail?id=${video.id}">
+                        <img src="https://img.youtube.com/vi/${ytbId}/hqdefault.jpg" class="card-img-top" alt="Poster">
+                    </a>
                     <div class="card-body">
-                        <h5 class="card-title">Video 1</h5>
+                        <h5 class="card-title">${video.title}</h5>
                         <div class="btn-wrapper float-end mb-3">
                             <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                            <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                    class="fas fa-share"></i> Share</button>
+                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/videoDetail?id=${video.id}&like">
+                                <i class="fa-regular fa-thumbs-up"></i> Like</a>
+                            <a class="btn btn-success" href="${pageContext.request.contextPath}/videoDetail?id=${video.id}&share">
+                                <i class="fas fa-share"></i> Share</a>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail">
-                    <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                    <div class="card-body">
-                        <h5 class="card-title">Video 1</h5>
-                        <div class="btn-wrapper float-end mb-3">
-                            <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                            <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                    class="fas fa-share"></i> Share</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail">
-                    <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                    <div class="card-body">
-                        <h5 class="card-title">Video 1</h5>
-                        <div class="btn-wrapper float-end mb-3">
-                            <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                            <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                    class="fas fa-share"></i> Share</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <a class="text-decoration-none text-reset" href="${pageContext.request.contextPath}/videoDetail">
-                    <img src="https://placehold.co/400x250" class="card-img-top" alt="Poster">
-                    <div class="card-body">
-                        <h5 class="card-title">Video 1</h5>
-                        <div class="btn-wrapper float-end mb-3">
-                            <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                            <button class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
-                                    class="fas fa-share"></i> Share</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
+        </c:forEach>
 
     </div>
 
     <div class="btn-wrapper text-center">
-        <button class="btn btn-secondary"><i class="fas fa-fast-backward"></i></button>
-        <button class="btn btn-secondary"><i class="fa-solid fa-left-long"></i></button>
-        <button class="btn btn-secondary"><i class="fa-solid fa-right-long"></i></button>
-        <button class="btn btn-secondary"><i class="fas fa-fast-forward"></i></button>
+        <a role="button" class="btn btn-secondary" href="?page=${0}"><i class="fas fa-fast-backward"></i></a>
+        <a role="button" class="btn btn-secondary" href="?page=${(pageNumber-1 < 0)?pageNumber:pageNumber-1}"><i class="fa-solid fa-left-long"></i></a>
+        <a role="button" class="btn btn-secondary" href="?page=${(pageNumber+1) > endPage?pageNumber:pageNumber+1}"><i class="fa-solid fa-right-long"></i></a>
+        <a role="button" class="btn btn-secondary" href="?page=${endPage}"><i class="fas fa-fast-forward"></i></a>
     </div>
 </div>
 
@@ -159,7 +113,7 @@
                 <form class="was-validated">
                     <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <label class="form-label" for="email">Gửi tới email:</label>
+                        <label class="form-label">Gửi tới email:</label>
                         <input type="email" class="form-control" required />
                     </div>
 
@@ -229,7 +183,7 @@
                     <div data-mdb-input-init class="form-outline mb-4">
                         <div class="row">
                             <div class="col-6">
-                                <label class="form-label" for="username">Username:</label>
+                                <label class="form-label">Username:</label>
                                 <input type="text" class="form-control"name="username" required />
 
                                 <label class="form-label">Fullname:</label>

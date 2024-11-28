@@ -8,12 +8,11 @@ import jakarta.persistence.TypedQuery;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class VideoDAOImpl implements VideoDAO {
     EntityManager em = XJPA.getEntityManager();
     @Override
-    protected void finalize() throws Throwable {
+    protected void finalize() {
         em.close();
     }
     @Override
@@ -25,7 +24,7 @@ public class VideoDAOImpl implements VideoDAO {
 
     @Override
     public List<Video> findByPage(int pageNumber, int pageSize) {
-        TypedQuery<Video> query = em.createQuery("SELECT v FROM Video v", Video.class);
+        TypedQuery<Video> query = em.createQuery("SELECT v FROM Video v WHERE v.active = true ORDER BY views DESC", Video.class);
 
         // Đặt vị trí bắt đầu cho phân trang (pageNumber tính từ 0)
         query.setFirstResult(pageNumber * pageSize);
@@ -117,9 +116,25 @@ public class VideoDAOImpl implements VideoDAO {
 
     @Override
     public List<Video> findByFavoriteByUser(String userId) {
-        String jpql = "SELECT v FROM Video v JOIN v.favorites f WHERE f.userid = :userId";
+        String jpql = "SELECT v FROM Video v JOIN v.favorites f WHERE f.userid = :userId GROUP BY v.id, v.title, v.poster, v.views, v.description, v.active";
         TypedQuery<Video> query = em.createQuery(jpql, Video.class);
         query.setParameter("userId", new UsersDAOImpl().findByIdOrEmail(userId));
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Video> findByFavoriteByUserPaged(String userId, int pageNumber, int pageSize) {
+        String jpql = "SELECT v FROM Video v JOIN v.favorites f WHERE f.userid = :userId GROUP BY v.id, v.title, v.poster, v.views, v.description, v.active";
+        TypedQuery<Video> query = em.createQuery(jpql, Video.class);
+        query.setParameter("userId", new UsersDAOImpl().findByIdOrEmail(userId));
+
+        // Đặt vị trí bắt đầu cho phân trang (pageNumber tính từ 0)
+        query.setFirstResult(pageNumber * pageSize);
+
+        // Đặt số lượng kết quả tối đa mỗi lần truy vấn (pageSize)
+        query.setMaxResults(pageSize);
+
+
         return query.getResultList();
     }
 

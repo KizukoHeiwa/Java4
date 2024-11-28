@@ -4,7 +4,6 @@ import com.org.java4.entities.Video;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public interface VideoDAO {
     /**Truy vấn tất cả*/
@@ -33,6 +32,7 @@ public interface VideoDAO {
     List<Video> findByShared();
     /**Truy vấn các Video được User ? yêu thích*/
     List<Video> findByFavoriteByUser(String userId);
+    List<Video> findByFavoriteByUserPaged(String userId, int pageNumber, int pageSize);
     /**Truy vấn các Video được share bởi User ?*/
     List<Video> findBySharedByUserId(String userId);
     /**Truy vấn các User thích Video ?*/

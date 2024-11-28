@@ -48,11 +48,10 @@ public class VideoDetail extends HttpServlet {
         String password = req.getParameter("password");
         String fullname = req.getParameter("fullname");
         String id = req.getParameter("id");
-        Users user = null;
+        Users user;
         boolean isLogin = true;
-        try {
-            user = new UsersDAOImpl().findByIdOrEmail(email);
-        } catch (Exception e) {
+        user = new UsersDAOImpl().findByIdOrEmail(email);
+        if (user == null) {
             isLogin = false;
         }
 

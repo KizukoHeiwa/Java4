@@ -11,7 +11,7 @@ import java.util.List;
 public class UsersDAOImpl implements UsersDAO {
     EntityManager em = XJPA.getEntityManager();
     @Override
-    protected void finalize() throws Throwable {
+    protected void finalize() {
         em.close();
     }
     @Override
@@ -20,12 +20,36 @@ public class UsersDAOImpl implements UsersDAO {
         TypedQuery<Users> query = em.createQuery(jpql, Users.class);
         return query.getResultList();
     }
+
+    @Override
+    public List<Users> findByPage(int pageNumber, int pageSize) {
+        TypedQuery<Users> query = em.createQuery("SELECT u FROM Users u", Users.class);
+
+        // Đặt vị trí bắt đầu cho phân trang (pageNumber tính từ 0)
+        query.setFirstResult(pageNumber * pageSize);
+
+        // Đặt số lượng kết quả tối đa mỗi lần truy vấn (pageSize)
+        query.setMaxResults(pageSize);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public int quantity() {
+        return this.findAll().size();
+    }
+
     @Override
     public Users findByIdOrEmail(String search) {
         String jpql = "SELECT o FROM Users o WHERE o.id = :search OR o.email = :search";
         TypedQuery<Users> query = em.createQuery(jpql, Users.class);
         query.setParameter("search", search);
-        return query.getSingleResult();
+        if (!query.getResultList().isEmpty()) {
+            return query.getSingleResult();
+        }
+        else {
+            return null;
+        }
     }
     @Override
     public void create(Users entity) {

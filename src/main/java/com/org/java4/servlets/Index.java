@@ -19,7 +19,7 @@ public class Index extends HttpServlet {
     VideoDAOImpl videoDAO = new VideoDAOImpl();
     int pageNumber = 0;
     int pageSize = 6;
-    int endPage = (int) ceil((double) videoDAO.quantity() / pageSize) - 1;
+    int endPage = (int) ceil(0.5 + (double) videoDAO.quantity() / pageSize) - 1;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,11 +48,10 @@ public class Index extends HttpServlet {
         String password = req.getParameter("password");
         String fullname = req.getParameter("fullname");
         String id = req.getParameter("id");
-        Users user = null;
+        Users user;
         boolean isLogin = true;
-        try {
-            user = new UsersDAOImpl().findByIdOrEmail(email);
-        } catch (Exception e) {
+        user = new UsersDAOImpl().findByIdOrEmail(email);
+        if (user == null) {
             isLogin = false;
         }
 
