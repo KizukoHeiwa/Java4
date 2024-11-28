@@ -23,11 +23,12 @@ import java.util.List;
 
 @WebServlet("/videoDetail")
 public class VideoDetail extends HttpServlet {
+    VideoDAOImpl videoDAO = new VideoDAOImpl();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getQueryString() != null) {
             if (req.getQueryString().contains("id")) {
-                req.setAttribute("video", new VideoDAOImpl().findById(req.getParameter("id")));
+                req.setAttribute("video", videoDAO.findById(req.getParameter("id")));
             }
             if (req.getQueryString().contains("logout")) {
                 req.getSession().setAttribute("user", null);
@@ -36,8 +37,12 @@ public class VideoDetail extends HttpServlet {
             }
         }
 
-        List<Video> listVideos = new VideoDAOImpl().findByPage(1, 4);
+        List<Video> listVideos = videoDAO.findByPage(1, 4);
         req.setAttribute("listVideos", listVideos);
+
+        Video video = videoDAO.findById(req.getParameter("id"));
+        video.setViews(video.getViews() + 1);
+        videoDAO.update(video);
 
         req.getRequestDispatcher("/videoDetail.jsp").forward(req, resp);
     }
