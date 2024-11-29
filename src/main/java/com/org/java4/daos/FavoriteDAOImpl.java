@@ -64,4 +64,16 @@ public class FavoriteDAOImpl implements FavoriteDAO {
         return query.getResultList();
     }
 
+    @Override
+    public int deleteByVideoIdAndUserId(String videoId, String userId) {
+        String jpql = "SELECT f FROM Favorite f WHERE f.videoid = :videoId AND f.userid = :userId";
+        TypedQuery<Favorite> query = em.createQuery(jpql, Favorite.class);
+        query.setParameter("videoId", new VideoDAOImpl().findById(videoId));
+        query.setParameter("userId", new UsersDAOImpl().findByIdOrEmail(userId));
+        for (Favorite favorite : query.getResultList()) {
+            deleteById(favorite.getId());
+        }
+        return query.getResultList().size();
+    }
+
 }

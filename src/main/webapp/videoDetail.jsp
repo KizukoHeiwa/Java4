@@ -73,7 +73,16 @@
                     <div class="btn-wrapper float-end">
                         <!-- <i class="fa-solid fa-thumbs-up"></i> -->
                         <form method="post">
-                            <button formaction="${url}&like=1" type="submit" class="btn btn-primary"><i class="fa-regular fa-thumbs-up"></i> Like</button>
+                            <c:choose>
+                                <c:when test="${listLikedVideos.contains(video)}">
+                                    <button class="btn btn-danger" type="submit" formaction="${url}&unlike=1">
+                                        <i class="fa-solid fa-thumbs-up"></i> Unlike</button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button class="btn btn-primary" type="submit" formaction="${url}&like=1">
+                                        <i class="fa-regular fa-thumbs-up"></i> Like</button>
+                                </c:otherwise>
+                            </c:choose>
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#share"><i
                                     class="fas fa-share"></i> Share</button>
                         </form>
@@ -143,6 +152,24 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Like thành công!</h4>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Unlike box modal -->
+<div class="modal" id="unlike">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Unlike thành công!</h4>
                 <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <!-- Modal footer -->
@@ -271,6 +298,12 @@
     </script>
 </c:if>
 
+<c:if test="${param.unlike == 1}">
+    <span id="unlike-modal-trigger" data-bs-toggle="modal" data-bs-target="#unlike" style="display: none;"></span>
+    <script>
+        document.getElementById('unlike-modal-trigger').click();
+    </script>
+</c:if>
 </body>
 
 </html>

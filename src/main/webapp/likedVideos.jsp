@@ -72,11 +72,13 @@
                     <div class="card-body">
                         <h5 class="card-title">${video.title}</h5>
                         <div class="btn-wrapper float-end mb-3">
+                            <form method="post" class="d-flex float-end gap-3">
                             <!-- <i class="fa-solid fa-thumbs-up"></i> -->
-                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/videoDetail?id=${video.id}&like">
-                                <i class="fa-regular fa-thumbs-up"></i> Like</a>
-                            <a class="btn btn-success" href="${pageContext.request.contextPath}/videoDetail?id=${video.id}&share">
-                                <i class="fas fa-share"></i> Share</a>
+                            <button class="btn btn-danger" type="submit" formaction="${pageContext.request.contextPath}/videoDetail?id=${video.id}&unlike=1">
+                                <i class="fa-solid fa-thumbs-up"></i> Unlike</button>
+                            <button class="btn btn-success" formaction="${pageContext.request.contextPath}/videoDetail?id=${video.id}&share">
+                                <i class="fas fa-share"></i> Share</button>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -38,7 +38,10 @@ public interface VideoDAO {
     /**Truy vấn các User thích Video ?*/
     List<String> findUserFavoriteVideoID(String videoId);
     /** Thống kê lượng like của từng Video */
-    HashMap<String, Long> findFavoriteByVideoId();
+    HashMap<String, Object[]> findFavoriteByVideoId();
+    /**Select oldest date by id*/
+    String findOldestLikeDate(String videoId);
+    String findNewestLikeDate(String videoId);
     /** Truy vấn video không được ai thích*/
     List<Video> findVideoNoLike();
 }

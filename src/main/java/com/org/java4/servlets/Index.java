@@ -1,5 +1,6 @@
 package com.org.java4.servlets;
 
+import com.org.java4.daos.FavoriteDAOImpl;
 import com.org.java4.daos.UsersDAOImpl;
 import com.org.java4.daos.VideoDAOImpl;
 import com.org.java4.entities.Users;
@@ -19,7 +20,7 @@ public class Index extends HttpServlet {
     VideoDAOImpl videoDAO = new VideoDAOImpl();
     int pageNumber = 0;
     int pageSize = 6;
-    int endPage = (int) ceil(0.5 + (double) videoDAO.quantity() / pageSize) - 1;
+    int endPage = (int) ceil(0.3 + (double) videoDAO.quantity() / pageSize) - 1;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,6 +33,15 @@ public class Index extends HttpServlet {
             if (req.getQueryString().contains("page")) {
                 pageNumber = Integer.parseInt(req.getParameter("page"));
             }
+
+            if (req.getQueryString().contains("unlike")) {
+                new FavoriteDAOImpl().deleteById(req.getParameter("unlike"));
+            }
+        }
+
+        Users user = (Users) req.getSession().getAttribute("user");
+        if (user != null) {
+            req.setAttribute("listLikedVideos", videoDAO.findByFavoriteByUser(user.getId()));
         }
 
         List<Video> listVideos = videoDAO.findByPage(pageNumber, pageSize);

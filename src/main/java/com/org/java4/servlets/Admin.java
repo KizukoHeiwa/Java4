@@ -28,11 +28,11 @@ public class Admin extends HttpServlet {
 
     int pageVideoNumber = 0;
     int pageVideoSize = 10;
-    int endVideoPage = (int) ceil(0.5 + (double) videoDAO.quantity() / pageVideoSize) - 1;
+    int endVideoPage = (int) ceil(0.3 + (double) videoDAO.quantity() / pageVideoSize) - 1;
 
     int pageUserNumber = 0;
     int pageUserSize = 10;
-    int endUserPage = (int) ceil(0.5 + (double) usersDAO.quantity() / pageUserSize) - 1;
+    int endUserPage = (int) ceil(0.3 + (double) usersDAO.quantity() / pageUserSize) - 1;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -44,6 +44,8 @@ public class Admin extends HttpServlet {
                 pageUserNumber = Integer.parseInt(req.getParameter("userPage"));
             }
         }
+
+        req.setAttribute("listVideoLikeNum", videoDAO.findFavoriteByVideoId());
 
         listVideos = videoDAO.findByPage(pageVideoNumber, pageVideoSize);
         req.setAttribute("quantity", videoDAO.quantity());
@@ -126,7 +128,7 @@ public class Admin extends HttpServlet {
                 throw new RuntimeException(e);
             } finally {
                 pageVideoNumber = 0;
-                endVideoPage = (int) ceil(0.5 + (double) videoDAO.quantity() / pageVideoSize) - 1;
+                endVideoPage = (int) ceil(0.3 + (double) videoDAO.quantity() / pageVideoSize) - 1;
             }
         }
 
@@ -166,7 +168,7 @@ public class Admin extends HttpServlet {
                 throw new RuntimeException(e);
             } finally {
                 pageUserNumber = 0;
-                endUserPage = (int) ceil(0.5 + (double) usersDAO.quantity() / pageUserSize) - 1;
+                endUserPage = (int) ceil(0.3 + (double) usersDAO.quantity() / pageUserSize) - 1;
             }
         }
 

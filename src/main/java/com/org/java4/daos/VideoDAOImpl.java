@@ -6,6 +6,8 @@ import com.org.java4.utils.XJPA;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -152,14 +154,30 @@ public class VideoDAOImpl implements VideoDAO {
     }
 
     @Override
-    public HashMap<String, Long> findFavoriteByVideoId() {
-        String jpql = "SELECT v.id ,COUNT(l.id) FROM Video v JOIN v.favorites l group by v.id";
+    public HashMap<String, Object[]> findFavoriteByVideoId() {
+        String jpql = "SELECT v.id, COUNT(f.id) FROM Video v JOIN v.favorites f group by v.id";
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
-        HashMap<String, Long> map = new HashMap<>();
+        HashMap<String, Object[]> map = new HashMap<>();
         for (Object[] obj: query.getResultList()) {
-            map.put((String) obj[0], (Long) obj[1]);
+            map.put(findById((String) obj[0]).getTitle(), new Object[]{obj[1] ,findOldestLikeDate((String) obj[0]), findNewestLikeDate((String) obj[0])});
         }
         return map;
+    }
+
+    @Override
+    public String findOldestLikeDate(String videoId) {
+        String jpql = "SELECT f.likedate FROM Favorite f JOIN f.videoid WHERE f.videoid.id = :videoId group by f.videoid, f.likedate ORDER BY f.likedate ASC LIMIT 1";
+        TypedQuery<LocalDate> query = em.createQuery(jpql, LocalDate.class);
+        query.setParameter("videoId", videoId);
+        return query.getSingleResult().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    @Override
+    public String findNewestLikeDate(String videoId) {
+        String jpql = "SELECT f.likedate FROM Favorite f JOIN f.videoid WHERE f.videoid.id = :videoId group by f.videoid, f.likedate ORDER BY f.likedate DESC LIMIT 1";
+        TypedQuery<LocalDate> query = em.createQuery(jpql, LocalDate.class);
+        query.setParameter("videoId", videoId);
+        return query.getSingleResult().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     @Override

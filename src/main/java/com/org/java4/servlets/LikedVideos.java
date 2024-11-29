@@ -24,7 +24,7 @@ public class LikedVideos extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Users user = (Users) req.getSession().getAttribute("user");
 
-        endPage = (int) ceil(0.5 + (double) videoDAO.findByFavoriteByUser(user.getId()).size() / pageSize) - 1;
+        endPage = (int) ceil(0.3 + (double) videoDAO.findByFavoriteByUser(user.getId()).size() / pageSize) - 1;
 
         if (req.getQueryString() != null) {
             if (req.getQueryString().contains("logout")) {

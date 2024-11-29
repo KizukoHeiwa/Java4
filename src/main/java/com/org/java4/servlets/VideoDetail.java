@@ -26,9 +26,14 @@ public class VideoDetail extends HttpServlet {
     VideoDAOImpl videoDAO = new VideoDAOImpl();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Users user = (Users) req.getSession().getAttribute("user");
+        if (user != null) {
+            req.setAttribute("listLikedVideos", videoDAO.findByFavoriteByUser(user.getId()));
+        }
         if (req.getQueryString() != null) {
             if (req.getQueryString().contains("id")) {
                 req.setAttribute("video", videoDAO.findById(req.getParameter("id")));
+
             }
             if (req.getQueryString().contains("logout")) {
                 req.getSession().setAttribute("user", null);
@@ -115,6 +120,20 @@ public class VideoDetail extends HttpServlet {
                     likedVideo.setVideoid(new VideoDAOImpl().findById(req.getParameter("id")));
                     likedVideo.setLikedate(LocalDate.now());
                     new FavoriteDAOImpl().create(likedVideo);
+                }
+                else {
+                    resp.sendRedirect(req.getContextPath() + "/videoDetail?id=" + req.getParameter("id") + "&login=0");
+                    return;
+                }
+            }
+
+            if (req.getQueryString().contains("unlike")) {
+                if (req.getSession().getAttribute("user") != null) {
+                    user = (Users) req.getSession().getAttribute("user");
+                    if (new FavoriteDAOImpl().deleteByVideoIdAndUserId(req.getParameter("id"), user.getId()) > 0) {
+                        resp.sendRedirect(req.getContextPath() + "/videoDetail?id=" + req.getParameter("id") + "&unlike=1");
+                        return;
+                    }
                 }
                 else {
                     resp.sendRedirect(req.getContextPath() + "/videoDetail?id=" + req.getParameter("id") + "&login=0");

@@ -17,4 +17,10 @@ public interface FavoriteDAO {
     void deleteById(String id);
     /**Tìm các lượt thích theo User ID ?*/
     List<Favorite> findByUserId(String userId);
+    /**
+     * Delete by video id and user id
+     *
+     * @return
+     */
+    int deleteByVideoIdAndUserId(String videoId, String userId);
 }

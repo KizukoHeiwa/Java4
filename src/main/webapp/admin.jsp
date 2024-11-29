@@ -300,12 +300,12 @@
                     <li class="nav-item">
                         <a class="nav-link active" data-bs-toggle="tab" href="#listLikedVideos">List liked videos</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#listUsersLiked">List Users liked by video</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#listUsersShared">List Users shared by video</a>
-                    </li>
+<%--                    <li class="nav-item">--%>
+<%--                        <a class="nav-link" data-bs-toggle="tab" href="#listUsersLiked">List Users liked by video</a>--%>
+<%--                    </li>--%>
+<%--                    <li class="nav-item">--%>
+<%--                        <a class="nav-link" data-bs-toggle="tab" href="#listUsersShared">List Users shared by video</a>--%>
+<%--                    </li>--%>
 
                 </ul>
                 <!-- Tab panes -->
@@ -322,74 +322,78 @@
                             </thead>
 
                             <tbody>
-                            <tr>
-                                <td>123</td>
-                                <td>123</td>
-                                <td>123</td>
-                                <td>123</td>
-                            </tr>
+                            <c:forEach items="${listVideoLikeNum}" var="entry">
+                                <c:set var="videoTitle" value="${entry.key}"/>
+                                <c:set var="videoStats" value="${entry.value}"/>
+                                <tr>
+                                    <td>${videoTitle}</td>
+                                    <td>${videoStats[0]}</td>
+                                    <td>${videoStats[1]}</td>
+                                    <td>${videoStats[2]}</td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
-                    <div id="listUsersLiked" class="container tab-pane fade">
-                        <select class="form-select mt-3" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
+<%--                    <div id="listUsersLiked" class="container tab-pane fade">--%>
+<%--                        <select class="form-select mt-3" aria-label="Default select example">--%>
+<%--                            <option selected>Open this select menu</option>--%>
+<%--                            <option value="1">One</option>--%>
+<%--                            <option value="2">Two</option>--%>
+<%--                            <option value="3">Three</option>--%>
+<%--                        </select>--%>
 
-                        <table class="table table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <td>Username</td>
-                                <td>Fullname</td>
-                                <td>Email</td>
-                                <td>Liked date</td>
-                            </tr>
-                            </thead>
+<%--                        <table class="table table-striped table-hover">--%>
+<%--                            <thead>--%>
+<%--                            <tr>--%>
+<%--                                <td>Username</td>--%>
+<%--                                <td>Fullname</td>--%>
+<%--                                <td>Email</td>--%>
+<%--                                <td>Liked date</td>--%>
+<%--                            </tr>--%>
+<%--                            </thead>--%>
 
-                            <tbody>
-                            <tr>
-                                <td>123</td>
-                                <td>123</td>
-                                <td>123</td>
-                                <td>123</td>
-                            </tr>
-                            </tbody>
-                        </table>
+<%--                            <tbody>--%>
+<%--                            <tr>--%>
+<%--                                <td>123</td>--%>
+<%--                                <td>123</td>--%>
+<%--                                <td>123</td>--%>
+<%--                                <td>123</td>--%>
+<%--                            </tr>--%>
+<%--                            </tbody>--%>
+<%--                        </table>--%>
 
-                    </div>
+<%--                    </div>--%>
 
-                    <div id="listUsersShared" class="container tab-pane fade">
-                        <select class="form-select mt-3" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
+<%--                    <div id="listUsersShared" class="container tab-pane fade">--%>
+<%--                        <select class="form-select mt-3" aria-label="Default select example">--%>
+<%--                            <option selected>Open this select menu</option>--%>
+<%--                            <option value="1">One</option>--%>
+<%--                            <option value="2">Two</option>--%>
+<%--                            <option value="3">Three</option>--%>
+<%--                        </select>--%>
 
-                        <table class="table table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <td>Username</td>
-                                <td>Fullname</td>
-                                <td>Email</td>
-                                <td>Liked date</td>
-                            </tr>
-                            </thead>
+<%--                        <table class="table table-striped table-hover">--%>
+<%--                            <thead>--%>
+<%--                            <tr>--%>
+<%--                                <td>Username</td>--%>
+<%--                                <td>Fullname</td>--%>
+<%--                                <td>Email</td>--%>
+<%--                                <td>Liked date</td>--%>
+<%--                            </tr>--%>
+<%--                            </thead>--%>
 
-                            <tbody>
-                            <tr>
-                                <td>123</td>
-                                <td>123</td>
-                                <td>123</td>
-                                <td>123</td>
-                            </tr>
-                            </tbody>
-                        </table>
+<%--                            <tbody>--%>
+<%--                            <tr>--%>
+<%--                                <td>123</td>--%>
+<%--                                <td>123</td>--%>
+<%--                                <td>123</td>--%>
+<%--                                <td>123</td>--%>
+<%--                            </tr>--%>
+<%--                            </tbody>--%>
+<%--                        </table>--%>
 
-                    </div>
+<%--                    </div>--%>
                 </div>
 
             </div>
