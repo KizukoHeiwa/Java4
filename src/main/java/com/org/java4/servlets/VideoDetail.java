@@ -20,10 +20,16 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
+import static java.lang.Math.ceil;
 
 @WebServlet("/videoDetail")
 public class VideoDetail extends HttpServlet {
     VideoDAOImpl videoDAO = new VideoDAOImpl();
+    int pageSize = 4;
+    int endPage = (int) ceil(0.3 + (double) videoDAO.quantity() / pageSize) - 1;
+    Random randomPage = new Random();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Users user = (Users) req.getSession().getAttribute("user");
@@ -42,7 +48,7 @@ public class VideoDetail extends HttpServlet {
             }
         }
 
-        List<Video> listVideos = videoDAO.findByPage(1, 4);
+        List<Video> listVideos = videoDAO.findByPage(randomPage.nextInt(endPage), pageSize);
         req.setAttribute("listVideos", listVideos);
 
         Video video = videoDAO.findById(req.getParameter("id"));

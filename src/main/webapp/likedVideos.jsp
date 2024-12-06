@@ -21,7 +21,7 @@
 <nav class="navbar navbar-expand-sm bg-secondary-subtle">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="images/logo-energy-pilates.png" alt="logo" width="150px">
+            <img src="${pageContext.request.contextPath}/images/logo.png" alt="logo" width="150px">
         </a>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav me-auto">
