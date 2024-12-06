@@ -8,8 +8,10 @@ import java.util.List;
 public interface VideoDAO {
     /**Truy vấn tất cả*/
     List<Video> findAll();
-    /**Truy vấn theo trang*/
+    /**Truy vấn video active theo trang*/
     List<Video> findByPage(int pageNumber, int pageSize);
+    /**Truy vấn tất cả theo trang*/
+    List<Video> findAllByPage(int pageNumber, int pageSize);
     /**Đếm số lượng video*/
     int quantity();
     /**Truy vấn theo mã*/
@@ -35,12 +37,11 @@ public interface VideoDAO {
     List<Video> findByFavoriteByUserPaged(String userId, int pageNumber, int pageSize);
     /**Truy vấn các Video được share bởi User ?*/
     List<Video> findBySharedByUserId(String userId);
-    /**Truy vấn các User thích Video ?*/
-    List<String> findUserFavoriteVideoID(String videoId);
     /** Thống kê lượng like của từng Video */
     HashMap<String, Object[]> findFavoriteByVideoId();
     /**Select oldest date by id*/
     String findOldestLikeDate(String videoId);
+    /**Select latest date by id*/
     String findNewestLikeDate(String videoId);
     /** Truy vấn video không được ai thích*/
     List<Video> findVideoNoLike();

@@ -300,12 +300,12 @@
                     <li class="nav-item">
                         <a class="nav-link active" data-bs-toggle="tab" href="#listLikedVideos">List liked videos</a>
                     </li>
-<%--                    <li class="nav-item">--%>
-<%--                        <a class="nav-link" data-bs-toggle="tab" href="#listUsersLiked">List Users liked by video</a>--%>
-<%--                    </li>--%>
-<%--                    <li class="nav-item">--%>
-<%--                        <a class="nav-link" data-bs-toggle="tab" href="#listUsersShared">List Users shared by video</a>--%>
-<%--                    </li>--%>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#listUsersLiked">List Users liked by video</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#listUsersShared">List Users shared by video</a>
+                    </li>
 
                 </ul>
                 <!-- Tab panes -->
@@ -335,65 +335,75 @@
                             </tbody>
                         </table>
                     </div>
-<%--                    <div id="listUsersLiked" class="container tab-pane fade">--%>
-<%--                        <select class="form-select mt-3" aria-label="Default select example">--%>
-<%--                            <option selected>Open this select menu</option>--%>
-<%--                            <option value="1">One</option>--%>
-<%--                            <option value="2">Two</option>--%>
-<%--                            <option value="3">Three</option>--%>
-<%--                        </select>--%>
+                    <div id="listUsersLiked" class="container tab-pane fade">
+                        <form method="get">
+                            <select name="usersLikedVideo" class="form-select my-3" aria-label="Default select example">
+                                <c:forEach items="${listAllVideos}" var="video">
+                                    <c:if test="${video.id == param.get('usersLikedVideo')}"><option value="${video.id}" selected>${video.title}</option></c:if>
+                                    <c:if test="${video.id != param.get('usersLikedVideo')}"><option value="${video.id}">${video.title}</option></c:if>
+                                </c:forEach>
+                            </select>
+                            <button formaction="${url}reports" class="btn btn-primary" type="submit">Search</button>
+                        </form>
 
-<%--                        <table class="table table-striped table-hover">--%>
-<%--                            <thead>--%>
-<%--                            <tr>--%>
-<%--                                <td>Username</td>--%>
-<%--                                <td>Fullname</td>--%>
-<%--                                <td>Email</td>--%>
-<%--                                <td>Liked date</td>--%>
-<%--                            </tr>--%>
-<%--                            </thead>--%>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <td>Username</td>
+                                <td>Fullname</td>
+                                <td>Email</td>
+                                <td>Liked date</td>
+                            </tr>
+                            </thead>
 
-<%--                            <tbody>--%>
-<%--                            <tr>--%>
-<%--                                <td>123</td>--%>
-<%--                                <td>123</td>--%>
-<%--                                <td>123</td>--%>
-<%--                                <td>123</td>--%>
-<%--                            </tr>--%>
-<%--                            </tbody>--%>
-<%--                        </table>--%>
+                            <tbody>
+                            <c:forEach items="${listUsersLikedVideo}" var="entry">
+                                <tr>
+                                    <td>${entry.key.id}</td>
+                                    <td>${entry.key.fullname}</td>
+                                    <td>${entry.key.email}</td>
+                                    <td>${entry.value}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
 
-<%--                    </div>--%>
+                    </div>
 
-<%--                    <div id="listUsersShared" class="container tab-pane fade">--%>
-<%--                        <select class="form-select mt-3" aria-label="Default select example">--%>
-<%--                            <option selected>Open this select menu</option>--%>
-<%--                            <option value="1">One</option>--%>
-<%--                            <option value="2">Two</option>--%>
-<%--                            <option value="3">Three</option>--%>
-<%--                        </select>--%>
+                    <div id="listUsersShared" class="container tab-pane fade">
+                        <form method="get">
+                            <select name="usersSharedVideo" class="form-select my-3" aria-label="Default select example">
+                                <c:forEach items="${listAllVideos}" var="video">
+                                    <c:if test="${video.id == param.get('usersSharedVideo')}"><option value="${video.id}" selected>${video.title}</option></c:if>
+                                    <c:if test="${video.id != param.get('usersSharedVideo')}"><option value="${video.id}">${video.title}</option></c:if>
+                                </c:forEach>
+                            </select>
+                            <button formaction="${url}reports" class="btn btn-primary" type="submit">Search</button>
+                        </form>
 
-<%--                        <table class="table table-striped table-hover">--%>
-<%--                            <thead>--%>
-<%--                            <tr>--%>
-<%--                                <td>Username</td>--%>
-<%--                                <td>Fullname</td>--%>
-<%--                                <td>Email</td>--%>
-<%--                                <td>Liked date</td>--%>
-<%--                            </tr>--%>
-<%--                            </thead>--%>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <td>Sender name</td>
+                                <td>Sender email</td>
+                                <td>Receiver email</td>
+                                <td>Sent date</td>
+                            </tr>
+                            </thead>
 
-<%--                            <tbody>--%>
-<%--                            <tr>--%>
-<%--                                <td>123</td>--%>
-<%--                                <td>123</td>--%>
-<%--                                <td>123</td>--%>
-<%--                                <td>123</td>--%>
-<%--                            </tr>--%>
-<%--                            </tbody>--%>
-<%--                        </table>--%>
+                            <tbody>
+                            <c:forEach items="${listUsersSharedVideo}" var="share">
+                                <tr>
+                                    <td>${share.userid.fullname}</td>
+                                    <td>${share.userid.email}</td>
+                                    <td>${share.emails}</td>
+                                    <td>${share.sharedate}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
 
-<%--                    </div>--%>
+                    </div>
                 </div>
 
             </div>

@@ -27,7 +27,7 @@ import static java.lang.Math.ceil;
 @WebServlet("/videoDetail")
 public class VideoDetail extends HttpServlet {
     VideoDAOImpl videoDAO = new VideoDAOImpl();
-    int pageSize = 4;
+    int pageSize = 5;
     int endPage = (int) ceil(0.3 + (double) videoDAO.quantity() / pageSize) - 1;
     Random randomPage = new Random();
     @Override

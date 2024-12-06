@@ -15,4 +15,6 @@ public interface ShareDAO {
     void update(Share item);
     /**Xóa theo mã*/
     void deleteById(String id);
+    /**Truy vấn các share theo video ?*/
+    List<Share> findByVideoId(String videoId);
 }

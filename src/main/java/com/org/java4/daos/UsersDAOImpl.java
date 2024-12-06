@@ -6,6 +6,8 @@ import com.org.java4.utils.XJPA;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public class UsersDAOImpl implements UsersDAO {
@@ -81,5 +83,19 @@ public class UsersDAOImpl implements UsersDAO {
         } catch (Exception e) {
             em.getTransaction().rollback();
         }
+    }
+
+    @Override
+    public HashMap<Users, LocalDate> findUserFavoriteVideoID(String videoId) {
+        String jpql = "SELECT u, f.likedate FROM Users u JOIN u.favorites f WHERE f.videoid.id = :videoId";
+        TypedQuery<Object> query = em.createQuery(jpql, Object.class);
+        query.setParameter("videoId", videoId);
+
+        HashMap<Users, LocalDate> map = new HashMap<>();
+        for (Object obj : query.getResultList()) {
+            Object[] array = (Object[]) obj;
+            map.put((Users) array[0], (LocalDate) array[1]);
+        }
+        return map;
     }
 }

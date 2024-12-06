@@ -38,6 +38,19 @@ public class VideoDAOImpl implements VideoDAO {
     }
 
     @Override
+    public List<Video> findAllByPage(int pageNumber, int pageSize) {
+        TypedQuery<Video> query = em.createQuery("SELECT v FROM Video v ORDER BY views DESC", Video.class);
+
+        // Đặt vị trí bắt đầu cho phân trang (pageNumber tính từ 0)
+        query.setFirstResult(pageNumber * pageSize);
+
+        // Đặt số lượng kết quả tối đa mỗi lần truy vấn (pageSize)
+        query.setMaxResults(pageSize);
+
+        return query.getResultList();
+    }
+
+    @Override
     public int quantity() {
         return this.findAll().size();
     }
@@ -149,11 +162,6 @@ public class VideoDAOImpl implements VideoDAO {
     }
 
     @Override
-    public List<String> findUserFavoriteVideoID(String videoId) {
-        return List.of();
-    }
-
-    @Override
     public HashMap<String, Object[]> findFavoriteByVideoId() {
         String jpql = "SELECT v.id, COUNT(f.id) FROM Video v JOIN v.favorites f group by v.id";
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
@@ -166,7 +174,7 @@ public class VideoDAOImpl implements VideoDAO {
 
     @Override
     public String findOldestLikeDate(String videoId) {
-        String jpql = "SELECT f.likedate FROM Favorite f JOIN f.videoid WHERE f.videoid.id = :videoId group by f.videoid, f.likedate ORDER BY f.likedate ASC LIMIT 1";
+        String jpql = "SELECT f.likedate FROM Favorite f JOIN f.videoid WHERE f.videoid.id = :videoId group by f.videoid, f.likedate ORDER BY f.likedate DESC LIMIT 1";
         TypedQuery<LocalDate> query = em.createQuery(jpql, LocalDate.class);
         query.setParameter("videoId", videoId);
         return query.getSingleResult().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -174,7 +182,7 @@ public class VideoDAOImpl implements VideoDAO {
 
     @Override
     public String findNewestLikeDate(String videoId) {
-        String jpql = "SELECT f.likedate FROM Favorite f JOIN f.videoid WHERE f.videoid.id = :videoId group by f.videoid, f.likedate ORDER BY f.likedate DESC LIMIT 1";
+        String jpql = "SELECT f.likedate FROM Favorite f JOIN f.videoid WHERE f.videoid.id = :videoId group by f.videoid, f.likedate ORDER BY f.likedate ASC LIMIT 1";
         TypedQuery<LocalDate> query = em.createQuery(jpql, LocalDate.class);
         query.setParameter("videoId", videoId);
         return query.getSingleResult().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));

@@ -1,7 +1,9 @@
 package com.org.java4.servlets;
 
+import com.org.java4.daos.ShareDAOImpl;
 import com.org.java4.daos.UsersDAOImpl;
 import com.org.java4.daos.VideoDAOImpl;
+import com.org.java4.entities.Share;
 import com.org.java4.entities.Users;
 import com.org.java4.entities.Video;
 import com.org.java4.utils.XDate;
@@ -12,7 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import static java.lang.Math.ceil;
@@ -21,9 +25,13 @@ import static java.lang.Math.ceil;
 public class Admin extends HttpServlet {
     VideoDAOImpl videoDAO = new VideoDAOImpl();
     UsersDAOImpl usersDAO = new UsersDAOImpl();
+    ShareDAOImpl shareDAO = new ShareDAOImpl();
 
     List<Video> listVideos;
     List<Users> listUsers;
+    List<Video> listAllVideos;
+    HashMap<Users, LocalDate> listUsersLikeVideo;
+    List<Share> listUsersShared;
 
 
     int pageVideoNumber = 0;
@@ -36,6 +44,8 @@ public class Admin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        listAllVideos = videoDAO.findAll();
+
         if (req.getQueryString() != null) {
             if (req.getQueryString().contains("videoPage")) {
                 pageVideoNumber = Integer.parseInt(req.getParameter("videoPage"));
@@ -47,7 +57,7 @@ public class Admin extends HttpServlet {
 
         req.setAttribute("listVideoLikeNum", videoDAO.findFavoriteByVideoId());
 
-        listVideos = videoDAO.findByPage(pageVideoNumber, pageVideoSize);
+        listVideos = videoDAO.findAllByPage(pageVideoNumber, pageVideoSize);
         req.setAttribute("quantity", videoDAO.quantity());
         req.setAttribute("listVideos", listVideos);
         req.setAttribute("pageVideoNumber", pageVideoNumber);
@@ -59,6 +69,8 @@ public class Admin extends HttpServlet {
         req.setAttribute("pageUserNumber", pageUserNumber);
         req.setAttribute("endUserPage", endUserPage);
 
+        req.setAttribute("listAllVideos", listAllVideos);
+
         if (req.getRequestURI().contains("edit")) {
             if (req.getQueryString() != null) {
                 if (req.getQueryString().contains("video")) {
@@ -69,6 +81,23 @@ public class Admin extends HttpServlet {
                 }
             }
         }
+
+        listUsersLikeVideo = usersDAO.findUserFavoriteVideoID(listAllVideos.get(0).getId());
+        listUsersShared = shareDAO.findByVideoId(listAllVideos.get(0).getId());
+        if (req.getRequestURI().contains("reports")) {
+            if (req.getQueryString() != null) {
+                if (req.getQueryString().contains("usersLikedVideo")) {
+                    listUsersLikeVideo = usersDAO.findUserFavoriteVideoID(req.getParameter("usersLikedVideo"));
+                }
+                if (req.getQueryString().contains("usersSharedVideo")) {
+                    listUsersShared = shareDAO.findByVideoId(req.getParameter("usersSharedVideo"));
+                }
+            }
+        }
+        req.setAttribute("listUsersLikedVideo", listUsersLikeVideo);
+        req.setAttribute("listUsersSharedVideo", listUsersShared);
+
+
 
         req.getRequestDispatcher("/admin.jsp").forward(req, resp);
     }

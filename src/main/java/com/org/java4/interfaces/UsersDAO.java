@@ -2,6 +2,8 @@ package com.org.java4.interfaces;
 
 import com.org.java4.entities.Users;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 public interface UsersDAO {
@@ -19,4 +21,8 @@ public interface UsersDAO {
     void update(Users item);
     /**Xóa theo mã*/
     void deleteById(String id);
+    /**
+     * Tìm user đã thích video ?
+     */
+    HashMap<Users, LocalDate> findUserFavoriteVideoID(String videoId);
 }

@@ -55,4 +55,12 @@ public class ShareDAOImpl implements ShareDAO {
             em.getTransaction().rollback();
         }
     }
+
+    @Override
+    public List<Share> findByVideoId(String videoId) {
+        String jpql = "SELECT o FROM Share o WHERE o.videoid.id = :videoId";
+        TypedQuery<Share> query = em.createQuery(jpql, Share.class);
+        query.setParameter("videoId", videoId);
+        return query.getResultList();
+    }
 }
